@@ -1,4 +1,4 @@
-# 大晚的QA手册
+# 潘深练的QA手册
 
 ![icon](http://qa.panshenlian.com/_media/icon200.png)
 
@@ -6,7 +6,7 @@
 
 # 概述
 
-大晚的QA手册目前支持 `中文` 语言阅读。
+潘深练的QA手册目前支持 `中文` 语言阅读。
 
 # 开源
 
@@ -14,7 +14,7 @@
 
 # 共创
 
-潘深练，大晚的QA手册发起者，网名大晚，个人网站：http://www.panshenlian.com ，微信公众号：潘潘和他的朋友们。
+潘深练，潘深练的QA手册发起者，网名大晚，个人网站：http://www.panshenlian.com ，微信公众号：潘潘和他的朋友们。
 
 ***
 Powered by docsify
