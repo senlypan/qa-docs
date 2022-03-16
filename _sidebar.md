@@ -22,16 +22,16 @@
   * [从IO到Netty](/zh-cn/03-io-to-netty.md)
   * [设计模式](/zh-cn/00-404.md)
   * [网络通讯编程](/zh-cn/00-404.md)
-  * [并发编程](/zh-cn/00-404.md)
-  * [JVM虚拟机](/zh-cn/00-404.md)
-  * [GC垃圾回收](/zh-cn/00-404.md)
+  * [并发编程](http://concurrent-programming.panshenlian.com/#/zh-cn/00-Java-Concurrency-and-Multithreading-Tutorial)
+  * [JVM虚拟机](http://jvm.panshenlian.com/#/zh-cn/02-jvm)
+  * [GC垃圾回收](http://jvm.panshenlian.com/#/zh-cn/03-gc)
   * [Tomcat](/zh-cn/00-404.md)
 
 * 四、流行脚手架
 
   * [JavaWeb/JDBC](/zh-cn/00-404.md)
   * [Mybatis](/zh-cn/00-404.md)
-  * [Spring](/zh-cn/00-404.md)
+  * [Spring](http://spring.panshenlian.com/#/zh-cn/02-spring)
   * [SpringBoot](/zh-cn/00-404.md)
 
 * 五、数据结构算法
