@@ -13,9 +13,11 @@
   * [Http协议](/zh-cn/00-404.md)
   * [Tcp/Ip协议](/zh-cn/00-404.md)
   * [Socket](/zh-cn/00-404.md)
+  * [计算机科学及编程导论](https://open.163.com/newview/movie/free?pid=M6TCSIN1U&mid=M6TCSTQD6)
 
 * 三、Java基础
 
+  * [JDK官方文档](https://docs.oracle.com/en/java/javase/index.html)
   * [集合框架](/zh-cn/00-404.md)
   * [多线程](/zh-cn/00-404.md)
   * [IO](/zh-cn/00-404.md)
@@ -27,12 +29,15 @@
   * [GC垃圾回收](http://jvm.panshenlian.com/#/zh-cn/03-gc)
   * [Tomcat](/zh-cn/00-404.md)
 
-* 四、流行脚手架
+* 四、基础框架
 
   * [JavaWeb/JDBC](/zh-cn/00-404.md)
   * [Mybatis](/zh-cn/00-404.md)
+  * [ORM框架分析](/zh-cn/00-404.md)
   * [Spring](http://spring.panshenlian.com/#/zh-cn/02-spring)
   * [SpringBoot](/zh-cn/00-404.md)
+  * [日志框架](/zh-cn/00-404.md)
+  * [优质工具](/zh-cn/00-404.md)
 
 * 五、数据结构算法
 
@@ -48,7 +53,10 @@
   * [架构设计原则](/zh-cn/00-404.md)
   * [架构设计协议](/zh-cn/00-404.md)
   * [架构设计模式](/zh-cn/00-404.md)
+  * [架构设计目标](/zh-cn/00-404.md)
+  * [架构设计挑战](/zh-cn/00-404.md)
   * [服务化架构治理](/zh-cn/00-404.md)
+  * [共识算法](/zh-cn/00-404.md)
   * [分布式技术栈](/zh-cn/00-404.md)
   * [全栈监控](/zh-cn/00-404.md)
   * [服务调度](/zh-cn/00-404.md)
@@ -70,6 +78,11 @@
   * [apollo](/zh-cn/00-404.md)
   * [seata](/zh-cn/00-404.md)
   * [saga](/zh-cn/00-404.md)
+  * [Thrift](/zh-cn/00-404.md)
+  * [序列化方案](/zh-cn/00-404.md)
+  * [注册中心选型](/zh-cn/00-404.md)
+  * [可用性策略](/zh-cn/00-404.md)
+  * [缓存一致性](/zh-cn/00-404.md)
 
 * 八、数据存储
 
@@ -79,13 +92,15 @@
   * [MongoDB](/zh-cn/00-404.md)
   * [hdfs](/zh-cn/00-404.md)
   * [hbase](/zh-cn/00-404.md)
+  * [Hadoop]](/zh-cn/00-404.md)
   * [全局ID方案](/zh-cn/00-404.md)
   * [分布式会话](/zh-cn/00-404.md)
   * [分布式锁](/zh-cn/00-404.md) 
   * [分布式缓存](/zh-cn/00-404.md)
   * [时序数据库](/zh-cn/00-404.md)
+  * [nosql数据结构对比]](/zh-cn/00-404.md)
 
-* 八、定时调度
+* 八、任务调度
 
   * [分布式调度问题](/zh-cn/00-404.md)
   * [quartz](/zh-cn/00-404.md)
@@ -93,14 +108,16 @@
   * [xxl-job](/zh-cn/00-404.md)
   * [PowerJob](/zh-cn/00-404.md)
 
-* 九、日志搜索
+* 九、日志管理
 
   * [solr](/zh-cn/00-404.md)
   * [Lucene](/zh-cn/00-404.md)
   * [elasticsearch](/zh-cn/00-404.md)
   * [kibana](/zh-cn/00-404.md)
-  * [日志抽取方案](/zh-cn/00-404.md)
+  * [日志采集方案](/zh-cn/00-404.md)
   * [数据同步方案](/zh-cn/00-404.md)
+  * [日志存储](/zh-cn/00-404.md)
+  * [日志检索](/zh-cn/00-404.md)
 
 * 十、消息中间件
 
@@ -108,7 +125,7 @@
   * [rabbitmq](/zh-cn/00-404.md)
   * [kafka](/zh-cn/00-404.md)
   * [rocketmq](/zh-cn/00-404.md)
-  * [方案对比](/zh-cn/00-404.md)
+  * [消息中间件选型](/zh-cn/00-404.md)
 
 * 十一、负载与代理
 
@@ -150,6 +167,7 @@
 * 十四、网关路由
 
   * [动态路由](/zh-cn/00-404.md)
+  * [路由策略](/zh-cn/00-404.md)
   * [API](/zh-cn/00-404.md)
   * [zuul](/zh-cn/00-404.md)
   * [kong](/zh-cn/00-404.md)
@@ -170,6 +188,7 @@
   * [gitlab](/zh-cn/00-404.md)
   * [sonar](/zh-cn/00-404.md)
   * [YAPI](/zh-cn/00-404.md)
+  * [关于虚拟化技术](/zh-cn/00-404.md)
   * [运维自动化 Ansible](/zh-cn/00-404.md) 
   * [镜像管理 Shipyard](/zh-cn/00-404.md) 
   * [安全审计 JumpServer](/zh-cn/00-404.md) 
@@ -187,16 +206,16 @@
 
 * 十八、安全防护
 
+  * [XSS攻防](/zh-cn/00-404.md)
   * [漏洞扫描 OpenVAS](/zh-cn/00-404.md)
   * [入侵侦测防御 Suricata](/zh-cn/00-404.md)
 
-* 十九、图谱
+* 十九、优质案例
 
-  * [图谱](/zh-cn/00-404.md)
+  * [秒杀方案](/zh-cn/00-404.md)
 
 * 二十、延伸话题
 
-  * [框架日志](/zh-cn/00-404.md)
   * [开发规范](/zh-cn/00-404.md)
   * [系统问题](/zh-cn/00-404.md)
   * [线上故障管理](/zh-cn/00-404.md)
