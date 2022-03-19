@@ -6,6 +6,7 @@
 
 * 二、计算机基础
 
+  * [计算机科学及编程导论](https://open.163.com/newview/movie/free?pid=M6TCSIN1U&mid=M6TCSTQD6)
   * [计算机基础原理](/zh-cn/00-404.md)
   * [Windows系统基础](/zh-cn/00-404.md)
   * [Linux系统基础](/zh-cn/00-404.md)
@@ -13,7 +14,6 @@
   * [Http协议](/zh-cn/00-404.md)
   * [Tcp/Ip协议](/zh-cn/00-404.md)
   * [Socket](/zh-cn/00-404.md)
-  * [计算机科学及编程导论](https://open.163.com/newview/movie/free?pid=M6TCSIN1U&mid=M6TCSTQD6)
 
 * 三、Java基础
 
