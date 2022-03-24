@@ -92,13 +92,13 @@
   * [MongoDB](/zh-cn/00-404.md)
   * [hdfs](/zh-cn/00-404.md)
   * [hbase](/zh-cn/00-404.md)
-  * [Hadoop]](/zh-cn/00-404.md)
+  * [Hadoop](/zh-cn/00-404.md)
   * [全局ID方案](/zh-cn/00-404.md)
   * [分布式会话](/zh-cn/00-404.md)
   * [分布式锁](/zh-cn/00-404.md) 
   * [分布式缓存](/zh-cn/00-404.md)
   * [时序数据库](/zh-cn/00-404.md)
-  * [nosql数据结构对比]](/zh-cn/00-404.md)
+  * [nosql数据结构对比](/zh-cn/00-404.md)
 
 * 八、任务调度
 
