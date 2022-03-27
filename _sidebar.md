@@ -9,6 +9,7 @@
   * [计算机科学及编程导论](https://open.163.com/newview/movie/free?pid=M6TCSIN1U&mid=M6TCSTQD6)
   * [深入理解计算机系统](https://book.douban.com/subject/26912767/)
   * [深入理解linux内核](https://book.douban.com/subject/1767120/)
+  * [图解TCP/IP](https://book.douban.com/subject/24737674/)
   * [Linux系统QA](/zh-cn/02-qa-linux.md)
 
 * 三、Java基础
@@ -19,7 +20,6 @@
   * [理解IO/TCPIP/Socket/Netty](/zh-cn/03-io-to-netty.md)
   * [网络编程QA](/zh-cn/03-qa-io-programming.md)
   * [设计模式](/zh-cn/00-404.md)
-  * [网络通讯编程](/zh-cn/00-404.md)
   * [并发编程](http://concurrent-programming.panshenlian.com/#/zh-cn/00-Java-Concurrency-and-Multithreading-Tutorial)
   * [JVM虚拟机](http://jvm.panshenlian.com/#/zh-cn/02-jvm)
   * [GC垃圾回收](http://jvm.panshenlian.com/#/zh-cn/03-gc)
