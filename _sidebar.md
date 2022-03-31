@@ -6,24 +6,20 @@
 
 * 二、计算机基础
 
-  * [计算机基础原理](/zh-cn/00-404.md)
-  * [Windows系统基础](/zh-cn/00-404.md)
-  * [Linux系统基础](/zh-cn/00-404.md)
-  * [Linux常用命令](/zh-cn/00-404.md)
-  * [Http协议](/zh-cn/00-404.md)
-  * [Tcp/Ip协议](/zh-cn/00-404.md)
-  * [Socket](/zh-cn/00-404.md)
   * [计算机科学及编程导论](https://open.163.com/newview/movie/free?pid=M6TCSIN1U&mid=M6TCSTQD6)
+  * [深入理解计算机系统](https://book.douban.com/subject/26912767/)
+  * [深入理解linux内核](https://book.douban.com/subject/1767120/)
+  * [图解TCP/IP](https://book.douban.com/subject/24737674/)
+  * [Linux系统QA](/zh-cn/02-qa-linux.md)
 
 * 三、Java基础
 
   * [JDK官方文档](https://docs.oracle.com/en/java/javase/index.html)
   * [集合框架](/zh-cn/00-404.md)
   * [多线程](/zh-cn/00-404.md)
-  * [IO](/zh-cn/00-404.md)
-  * [从IO到Netty](/zh-cn/03-io-to-netty.md)
+  * [理解IO/TCPIP/Socket/Netty](/zh-cn/03-io-to-netty.md)
+  * [网络编程QA](/zh-cn/03-qa-io-programming.md)
   * [设计模式](/zh-cn/00-404.md)
-  * [网络通讯编程](/zh-cn/00-404.md)
   * [并发编程](http://concurrent-programming.panshenlian.com/#/zh-cn/00-Java-Concurrency-and-Multithreading-Tutorial)
   * [JVM虚拟机](http://jvm.panshenlian.com/#/zh-cn/02-jvm)
   * [GC垃圾回收](http://jvm.panshenlian.com/#/zh-cn/03-gc)
@@ -34,7 +30,7 @@
   * [JavaWeb/JDBC](/zh-cn/00-404.md)
   * [Mybatis](/zh-cn/00-404.md)
   * [ORM框架分析](/zh-cn/00-404.md)
-  * [Spring](http://spring.panshenlian.com/#/zh-cn/02-spring)
+  * [Spring](http://spring.panshenlian.com/#/zh-cn/02-spring-core)
   * [SpringBoot](/zh-cn/00-404.md)
   * [日志框架](/zh-cn/00-404.md)
   * [优质工具](/zh-cn/00-404.md)
@@ -93,13 +89,13 @@
   * [MongoDB](/zh-cn/00-404.md)
   * [hdfs](/zh-cn/00-404.md)
   * [hbase](/zh-cn/00-404.md)
-  * [Hadoop]](/zh-cn/00-404.md)
+  * [Hadoop](/zh-cn/00-404.md)
   * [全局ID方案](/zh-cn/00-404.md)
   * [分布式会话](/zh-cn/00-404.md)
   * [分布式锁](/zh-cn/00-404.md) 
   * [分布式缓存](/zh-cn/00-404.md)
   * [时序数据库](/zh-cn/00-404.md)
-  * [nosql数据结构对比]](/zh-cn/00-404.md)
+  * [nosql数据结构对比](/zh-cn/00-404.md)
 
 * 八、任务调度
 
@@ -211,9 +207,11 @@
   * [漏洞扫描 OpenVAS](/zh-cn/00-404.md)
   * [入侵侦测防御 Suricata](/zh-cn/00-404.md)
 
-* 十九、优质案例
+* 十九、常见场景
 
   * [秒杀方案](/zh-cn/00-404.md)
+  * [红包方案](/zh-cn/00-404.md)
+  * [弹幕方案](/zh-cn/00-404.md)
 
 * 二十、延伸话题
 
@@ -223,6 +221,7 @@
   * [项目管理](/zh-cn/00-404.md)
   * [团队管理](/zh-cn/00-404.md)
   * [个人管理](/zh-cn/00-404.md)
+  * [敏捷](/zh-cn/00-404.md)
 
 ---
 

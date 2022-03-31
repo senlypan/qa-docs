@@ -14,7 +14,7 @@ This document is open source（GihHub:senlypan/qa-docs），welcome to submit [i
 
 # Contributor
 
-Pan Shenlian, creator of QA documentation, Network ID : biglate , Personal Website: http://www.panshenlian.com , Wechat Official Account: 潘潘和他的朋友们。
+Pan Shenlian, creator of QA documentation, Network ID : biglate , Personal Website: [http://www.panshenlian.com](http://www.panshenlian.com) , Wechat Official Account: 潘潘和他的朋友们。
 
 ***
 Powered by docsify

@@ -14,7 +14,7 @@
 
 # 共创
 
-潘深练，潘深练的QA手册创建者，网名大晚，个人网站：http://www.panshenlian.com ，微信公众号：潘潘和他的朋友们。
+潘深练，潘深练的QA手册创建者，网名大晚，个人网站：[http://www.panshenlian.com](http://www.panshenlian.com) ，微信公众号：潘潘和他的朋友们。
 
 ***
 Powered by docsify
