@@ -13,9 +13,11 @@
   * [Http协议](/zh-cn/00-404.md)
   * [Tcp/Ip协议](/zh-cn/00-404.md)
   * [Socket](/zh-cn/00-404.md)
+  * [计算机科学及编程导论](https://open.163.com/newview/movie/free?pid=M6TCSIN1U&mid=M6TCSTQD6)
 
 * 三、Java基础
 
+  * [JDK官方文档](https://docs.oracle.com/en/java/javase/index.html)
   * [集合框架](/zh-cn/00-404.md)
   * [多线程](/zh-cn/00-404.md)
   * [IO](/zh-cn/00-404.md)
@@ -64,6 +66,7 @@
   * [性能设计](/zh-cn/00-404.md)
   * [管理设计](/zh-cn/00-404.md)
   * [DDD](/zh-cn/00-404.md)
+  * [推荐阅读](/zh-cn/06-book-list.md)
 
 * 七、分布式架构实践
 
@@ -76,6 +79,7 @@
   * [apollo](/zh-cn/00-404.md)
   * [seata](/zh-cn/00-404.md)
   * [saga](/zh-cn/00-404.md)
+  * [Thrift](/zh-cn/00-404.md)
   * [序列化方案](/zh-cn/00-404.md)
   * [注册中心选型](/zh-cn/00-404.md)
   * [可用性策略](/zh-cn/00-404.md)
@@ -89,6 +93,7 @@
   * [MongoDB](/zh-cn/00-404.md)
   * [hdfs](/zh-cn/00-404.md)
   * [hbase](/zh-cn/00-404.md)
+  * [Hadoop]](/zh-cn/00-404.md)
   * [全局ID方案](/zh-cn/00-404.md)
   * [分布式会话](/zh-cn/00-404.md)
   * [分布式锁](/zh-cn/00-404.md) 
@@ -184,6 +189,7 @@
   * [gitlab](/zh-cn/00-404.md)
   * [sonar](/zh-cn/00-404.md)
   * [YAPI](/zh-cn/00-404.md)
+  * [关于虚拟化技术](/zh-cn/00-404.md)
   * [运维自动化 Ansible](/zh-cn/00-404.md) 
   * [镜像管理 Shipyard](/zh-cn/00-404.md) 
   * [安全审计 JumpServer](/zh-cn/00-404.md) 
@@ -201,6 +207,7 @@
 
 * 十八、安全防护
 
+  * [XSS攻防](/zh-cn/00-404.md)
   * [漏洞扫描 OpenVAS](/zh-cn/00-404.md)
   * [入侵侦测防御 Suricata](/zh-cn/00-404.md)
 
