@@ -83,7 +83,7 @@
 
 * 八、数据存储
 
-  * [mysql](/zh-cn/00-404.md)
+  * [MySQL数据库QA](/zh-cn/08-qa-mysql.md)
   * [redis](/zh-cn/00-404.md)
   * [Fastdfs](/zh-cn/00-404.md)
   * [MongoDB](/zh-cn/00-404.md)
