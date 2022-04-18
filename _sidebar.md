@@ -1,48 +1,48 @@
 <!-- zh-cn/_sidebar.md -->
 
-* 一、文档指南
+* 一、小册指南
 
-  * [文档指南](/zh-cn/README.md)
+  * [小册指南](/zh-cn/README.md)
 
-* 二、计算机基础
+* 二、机器基础
 
-  * [计算机科学及编程导论](https://open.163.com/newview/movie/free?pid=M6TCSIN1U&mid=M6TCSTQD6)
-  * [深入理解计算机系统](https://book.douban.com/subject/26912767/)
-  * [深入理解linux内核](https://book.douban.com/subject/1767120/)
-  * [图解TCP/IP](https://book.douban.com/subject/24737674/)
+  * [操作系统](/zh-cn/02-computer.md)
+  * [网络协议](/zh-cn/02-tcp-ip-socket.md)
   * [Linux系统QA](/zh-cn/02-qa-linux.md)
 
-* 三、Java基础
+* 三、数据基础
 
-  * [JDK官方文档](https://docs.oracle.com/en/java/javase/index.html)
+  * [数据结构](/zh-cn/00-404.md)
+  * [基础算法](/zh-cn/00-404.md)
+
+* 四、编程基础
+
+  * [并发编程基础](/zh-cn/04-concurrent-programming.md)
+  * [JDK官方文档](/zh-cn/04-jdk-docs.md)
   * [集合框架](/zh-cn/00-404.md)
   * [多线程](/zh-cn/00-404.md)
   * [理解IO/TCPIP/Socket/Netty](/zh-cn/03-io-to-netty.md)
   * [网络编程QA](/zh-cn/03-qa-io-programming.md)
   * [设计模式](/zh-cn/00-404.md)
-  * [并发编程](http://concurrent-programming.panshenlian.com/#/zh-cn/00-Java-Concurrency-and-Multithreading-Tutorial)
-  * [JVM虚拟机](http://jvm.panshenlian.com/#/zh-cn/02-jvm)
-  * [GC垃圾回收](http://jvm.panshenlian.com/#/zh-cn/03-gc)
+  * [JVM虚拟机](/zh-cn/04-jvm.md)
+  * [GC垃圾回收](/zh-cn/04-gc.md)
   * [Tomcat](/zh-cn/00-404.md)
 
-* 四、基础框架
+* 五、框架基础
 
   * [JavaWeb/JDBC](/zh-cn/00-404.md)
   * [Mybatis](/zh-cn/00-404.md)
   * [ORM框架分析](/zh-cn/00-404.md)
-  * [Spring](http://spring.panshenlian.com/#/zh-cn/02-spring-core)
+  * [Spring](/zh-cn/05-spring.md)
   * [SpringBoot](/zh-cn/00-404.md)
   * [日志框架](/zh-cn/00-404.md)
   * [优质工具](/zh-cn/00-404.md)
 
-* 五、数据结构算法
-
-  * [数据结构](/zh-cn/00-404.md)
-  * [基础算法](/zh-cn/00-404.md)
-
 * 六、架构基础
 
-  * [架构演进](/zh-cn/00-404.md)
+  * [架构目标](/zh-cn/06-architecture-target.md)
+  * [架构演化](/zh-cn/06-architecture-evolution.md)
+  * [ACID](/zh-cn/00-404.md)
   * [CAP](/zh-cn/00-404.md)
   * [数据一致性](/zh-cn/00-404.md)
   * [分布式事务](/zh-cn/00-404.md)
@@ -105,11 +105,13 @@
   * [xxl-job](/zh-cn/00-404.md)
   * [PowerJob](/zh-cn/00-404.md)
 
-* 十、日志管理
+* 十、搜索与日志
 
   * [solr](/zh-cn/00-404.md)
   * [Lucene](/zh-cn/00-404.md)
+  * [flume](/zh-cn/00-404.md)
   * [elasticsearch](/zh-cn/00-404.md)
+  * [logstash](/zh-cn/00-404.md)
   * [kibana](/zh-cn/00-404.md)
   * [日志采集方案](/zh-cn/00-404.md)
   * [数据同步方案](/zh-cn/00-404.md)

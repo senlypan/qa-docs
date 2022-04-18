@@ -2,7 +2,7 @@
 
 ![icon](http://qa.panshenlian.com/_media/icon200.png)
 
-> 一本QA共创文档。
+> 这是一本 Java 方向的学习手册，随着时间的积累，它会越来越丰满，希望对后来的你有用。
 
 # 概述
 
@@ -12,9 +12,9 @@
 
 本文档开源（GihHub:senlypan/qa-docs），欢迎提交 [issue](https://github.com/senlypan/qa-docs/issues)，投稿或推荐优质QA相关内容。
 
-# 共创
+# 关于我
 
-潘深练，潘深练的QA手册创建者，网名大晚，个人网站：[http://www.panshenlian.com](http://www.panshenlian.com) ，微信公众号：潘潘和他的朋友们。
+这里有我的个人网站：[http://www.panshenlian.com](http://www.panshenlian.com) 、微信公众号：潘潘和他的朋友们。
 
 ***
 Powered by docsify
