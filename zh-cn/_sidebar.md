@@ -42,6 +42,7 @@
 
   * [架构目标](/zh-cn/06-architecture-target.md)
   * [架构演化](/zh-cn/06-architecture-evolution.md)
+  * [数据密集型应用](/zh-cn/06-data-intensive-application.md)
   * [ACID](/zh-cn/00-404.md)
   * [CAP](/zh-cn/00-404.md)
   * [数据一致性](/zh-cn/00-404.md)
@@ -61,7 +62,7 @@
   * [弹力设计](/zh-cn/00-404.md)
   * [性能设计](/zh-cn/00-404.md)
   * [管理设计](/zh-cn/00-404.md)
-  * [DDD](/zh-cn/00-404.md)
+  * [DDD](/zh-cn/06-ddd.md)
   * [推荐阅读](/zh-cn/06-book-list.md)
 
 * 七、分布式架构实践
