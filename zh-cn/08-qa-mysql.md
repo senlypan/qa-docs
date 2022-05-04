@@ -4,12 +4,39 @@
 >
 > 创建: 2022-03-31
 
-## 架构
+## 〇、MySQL前言
 
-### MySQL的逻辑架构图
+### 0.1、MySQL起源和分支
+
+MySQL 是最流行的关系型数据库软件之一，由于其体积小、速度快、开源免费、简单易用、维护成本低等，在集群架构中易于扩展、高可用，因此深受开发者和企业的欢迎。
+
+![08-qa-mysql#history](../_media/images/08-qa-mysql/mysql-history-001.png)
+
+MySQL发展历程如下：
+
+![08-qa-mysql#history](../_media/images/08-qa-mysql/mysql-history-002.png)
+
+MySQL主流分支如下图所示：
+
+![08-qa-mysql#history](../_media/images/08-qa-mysql/mysql-history-003.png)
+
+MySQL从最初的1.0、3.1到后来的8.0，发生了各种各样的变化。被Oracle收购后，MySQL的版本演化出了多个分支，除了需要付费的MySQL企业版本，还有很多MySQL社区版本。还有一条分支非常流行的开源分支版本叫Percona Server，它是MySQL的技术支持公司Percona推出的，也是在实际工作中经常碰到的。Percona Server在MySQL官方版本的基础上做了一些补丁和优化，同时推出了一些工具。另外一个非常不错的版本叫MariaDB，它是MySQL的公司被Oracle收购后，MySQL的创始人Monty先生，按原来的思路重新写的一套新数据库，同时也把 InnoDB 引擎作为主要存储引擎，也算 MySQL 的分支。
+
+### 0.2、MySQL应用架构演变
+
+
+
+
+
+
+## 一、MySQL架构原理
+
+### 1.1、MYSQL体系架构
+
+#### MySQL的逻辑架构图
 - ![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-arch-001.jpg)
 
-### 功能模块
+#### 组件
 - MySQL的框架有几个组件, 各是什么作用? 
     - 连接器：负责跟客户端建立连接、获取权限、维持和管理连接。
     - 查询缓存：查询请求先访问缓存(key 是查询的语句，value 是查询的结果)。命中直接返回。不推荐使用缓存，更新会把缓存清除(关闭缓存：参数 query_cache_type 设置成 DEMAND)。
@@ -60,3 +87,90 @@
 
 - 为什么会有两份日志呢？
     - 因为最开始 MySQL 里并没有 `InnoDB` 引擎。MySQL 自带的引擎是 `MyISAM`，但是 `MyISAM` 没有 `crash-safe` 的能力，`binlog` 日志只能用于归档。而 InnoDB 是另一个公司以插件形式引入 MySQL 的，既然只依靠 binlog 是没有 `crash-safe` 能力的，所以 `InnoDB` 使用另外一套日志系统——也就是 `redo log` 来实现 `crash-safe` 能力。
+
+
+### 1.2、MySQL运行机制
+
+### 1.3、MySQL存储引擎
+
+
+
+
+
+
+
+
+
+
+
+
+## 二、MySQL索引原理
+
+### 2.1、索引类型
+
+### 2.2、索引原理
+
+### 2.3、索引分析与优化
+
+### 2.4、查询优化
+
+
+
+
+
+
+
+## 三、MySQL事务和锁
+
+### 3.1、ACID特性
+
+### 3.2、事务控制的演进
+
+### 3.3、事务隔离级别
+
+### 3.4、锁机制与实战
+
+
+
+
+## 四、MySQL集群架构
+
+### 4.1、集群架构设计
+
+### 4.2、主从模式
+
+### 4.3、双主模式
+
+### 4.4、分库分表
+
+
+
+
+
+
+## 五、分库分表实战及中间件
+
+### 5.1、分库分表背景
+
+### 5.2、ShardingSphere
+
+### 5.3、MyCat
+
+
+
+
+## 六、运维和第三方工具
+
+### 6.1、Yearning 
+
+### 6.2、canal
+
+### 6.3、DataX
+
+### 6.4、percona-toolkit
+
+### 6.5、MySQLMTOP
+
+### 6.6、ELK
+
+### 6.7、Prometheus 
