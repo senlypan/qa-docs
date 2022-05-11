@@ -93,7 +93,7 @@
   * [Hadoop](/zh-cn/00-404.md)
   * [全局ID方案](/zh-cn/00-404.md)
   * [分布式会话](/zh-cn/00-404.md)
-  * [分布式锁](/zh-cn/00-404.md) 
+  * [分布式锁](/zh-cn/08-distributed-locking.md) 
   * [理解缓存](/zh-cn/08-cache-all.md)
   * [时序数据库](/zh-cn/00-404.md)
   * [nosql数据结构对比](/zh-cn/00-404.md)
