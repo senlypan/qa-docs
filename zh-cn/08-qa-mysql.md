@@ -454,7 +454,7 @@ MyISAM表对应三个文件，一个.frm表结构文件，一个MYD表数据文�
     撤消日志是在事务开始之前保存的被修改数据的备份，用于例外情况时回滚事务。撤消日志属于逻辑日志，根据每行记录进行记录。撤消日志存在于系统表空间、撤消表空间和临时表空间中。
 
 - **新版本结构演变**
-    - ![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-innodb-buffer-002.png)
+    ![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-innodb-buffer-002.png)
     - MySQL 5.7 版本
         - 将 Undo日志表空间从共享表空间 ibdata 文件中分离出来，可以在安装 MySQL 时由用户自行指定文件大小和数量。
         - 增加了 temporary 临时表空间，里面存储着临时表或临时查询结果集的数据。
@@ -466,19 +466,507 @@ MyISAM表对应三个文件，一个.frm表结构文件，一个MYD表数据文�
         - 将Doublewrite Buffer从共享表空间ibdata中也分离出来了。
 
 #### 3)、InnoDB线程模型
+    
+![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-innodb-thread-001.png)
+- **IO Thread**
+在InnoDB中使用了大量的AIO（Async IO）来做读写处理，这样可以极大提高数据库的性能。在InnoDB1.0版本之前共有4个IO Thread，分别是write，read，insert buffer和log thread，后来版本将read thread和write thread分别增大到了4个，一共有10个了。
+    - read thread ： 负责读取操作，将数据从磁盘加载到缓存page页。4个
+    - write thread：负责写操作，将缓存脏页刷新到磁盘。4个
+    - log thread：负责将日志缓冲区内容刷新到磁盘。1个
+    - insert buffer thread ：负责将写缓冲内容刷新到磁盘。1个
+
+- **Purge Thread**
+事务提交之后，其使用的undo日志将不再需要，因此需要Purge Thread回收已经分配的undo页。
+show variables like '%innodb_purge_threads%';
+
+- **Page Cleaner Thread**
+作用是将脏数据刷新到磁盘，脏数据刷盘后相应的redo log也就可以覆盖，即可以同步数据，又能达到redo log循环使用的目的。会调用write thread线程处理。
+show variables like '%innodb_page_cleaners%';
+
+- **Master Thread**
+Master thread是InnoDB的主线程，负责调度其他各线程，优先级最高。作用是将缓冲池中的数据异步刷新到磁盘 ，保证数据的一致性。包含：脏页的刷新（page cleaner thread）、undo页回收（purge thread）、redo日志刷新（log thread）、合并写缓冲等。内部有两个主处理，分别是每隔1秒和10秒处理。
+    - 每1秒的操作：
+        - 刷新日志缓冲区，刷到磁盘
+        - 合并写缓冲区数据，根据IO读写压力来决定是否操作
+        - 刷新脏页数据到磁盘，根据脏页比例达到75%才操作（innodb_max_dirty_pages_pct，innodb_io_capacity）
+
+    - 每10秒的操作：
+        - 刷新脏页数据到磁盘
+        - 合并写缓冲区数据
+        - 刷新日志缓冲区
+        - 删除无用的undo页
+
 #### 4)、InnoDB数据文件
+
+- **InnoDB文件存储结构**
+![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-tablespaces.png)
+InnoDB数据文件存储结构：分为一个ibd数据文件-->Segment（段）-->Extent（区）-->Page（页）-->Row（行）
+    - **Tablesapce**
+    表空间，用于存储多个ibd数据文件，用于存储表的记录和索引。一个文件包含多个段。
+    - **Segment**
+    段，用于管理多个Extent，分为数据段（Leaf node segment）、索引段（Non-leaf nodesegment）、回滚段（Rollback segment）。一个表至少会有两个segment，一个管理数据，一个管理索引。每多创建一个索引，会多两个segment。
+    - **Extent**
+    区，一个区固定包含64个连续的页，大小为1M。当表空间不足，需要分配新的页资源，不会一页一页分，直接分配一个区。
+    - **Page**
+    页，用于存储多个Row行记录，大小为16K。包含很多种页类型，比如数据页，undo页，系统页，事务数据页，大的BLOB对象页。
+    - **Row**
+    行，包含了记录的字段值，事务ID（Trx id）、滚动指针（Roll pointer）、字段指针（Field pointers）等信息。
+
+Page是文件最基本的单位，无论何种类型的page，都是由page header，page trailer和page body组成。如下图所示
+
+![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-tablespaces-page.png)
+
+- **InnoDB文件存储格式**
+    - 通过 SHOW TABLE STATUS 命令
+    ![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-file-format.png)
+
+    一般情况下，如果row_format为REDUNDANT、COMPACT，文件格式为Antelope；如果row_format为DYNAMIC和COMPRESSED，文件格式为Barracuda。
+        - 通过 information_schema 查看指定表的文件格式
+        ```mysql
+            select * from information_schema.innodb_sys_tables;
+        ```
+
+- **File文件格式（File-Format）**
+在早期的InnoDB版本中，文件格式只有一种，随着InnoDB引擎的发展，出现了新文件格式，用于支持新的功能。目前InnoDB只支持两种文件格式：Antelope 和 Barracuda。
+    - Antelope: 先前未命名的，最原始的InnoDB文件格式，它支持两种行格式：COMPACT和REDUNDANT，MySQL 5.6及其以前版本默认格式为Antelope。
+    - Barracuda: 新的文件格式。它支持InnoDB的所有行格式，包括新的行格式：COMPRESSED和 DYNAMIC。
+通过innodb_file_format 配置参数可以设置InnoDB文件格式，之前默认值为Antelope，5.7版本开始改为Barracuda。
+
+- **Row行格式（Row_format）**
+表的行格式决定了它的行是如何物理存储的，这反过来又会影响查询和DML操作的性能。如果在单个page页中容纳更多行，查询和索引查找可以更快地工作，缓冲池中所需的内存更少，写入更新时所需的I/O更少。
+
+![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-row-format.png)
+
+- InnoDB存储引擎支持四种行格式：REDUNDANT、COMPACT、DYNAMIC和COMPRESSED。
+DYNAMIC和COMPRESSED新格式引入的功能有：**数据压缩**、**增强型长列数据的页外存储**和**大索引前缀**。每个表的数据分成若干页来存储，每个页中采用B树结构存储；如果某些字段信息过长，无法存储在B树节点中，这时候会被单独分配空间，此时被称为溢出页，该字段被称为页外列。
+    - REDUNDANT 行格式
+    使用REDUNDANT行格式，表会将变长列值的前768字节存储在B树节点的索引记录中，其余的存储在溢出页上。对于大于等于786字节的固定长度字段InnoDB会转换为变长字段，以便能够在页外存储。
+    - COMPACT 行格式
+    与REDUNDANT行格式相比，COMPACT行格式减少了约20%的行存储空间，但代价是增加了某些操作的CPU使用量。如果系统负载是受缓存命中率和磁盘速度限制，那么COMPACT格式可能更快。如果系统负载受到CPU速度的限制，那么COMPACT格式可能会慢一些。
+    - DYNAMIC 行格式
+    使用DYNAMIC行格式，InnoDB会将表中长可变长度的列值完全存储在页外，而索引记录只包含指向溢出页的20字节指针。大于或等于768字节的固定长度字段编码为可变长度字段。DYNAMIC行格式支持大索引前缀，最多可以为3072字节，可通过innodb_large_prefix参数控制。
+    - COMPRESSED 行格式
+    COMPRESSED行格式提供与DYNAMIC行格式相同的存储特性和功能，但增加了对表和索引数据压缩的支持。
+
+在创建表和索引时，文件格式都被用于每个InnoDB表数据文件（其名称与*.ibd匹配）。修改文件格式的方法是重新创建表及其索引，最简单方法是对要修改的每个表使用以下命令：
+    - ALTER TABLE 表名 ROW_FORMAT=格式类型; 
+
 #### 5)、Undo Log
+
+- **Undo Log介绍**
+    - Undo：意为撤销或取消，以撤销操作为目的，返回指定某个状态的操作。
+    - Undo Log：数据库事务开始之前，会将要修改的记录存放到 Undo 日志里，当事务回滚时或者数据库崩溃时，可以利用 Undo 日志，撤销未提交事务对数据库产生的影响。
+    - Undo Log产生和销毁：Undo Log在事务开始前产生；事务在提交时，并不会立刻删除undolog，innodb会将该事务对应的undo log放入到删除列表中，后面会通过后台线程purge thread进行回收处理。Undo Log属于逻辑日志，记录一个变化过程。例如执行一个delete，undolog会记录一个insert；执行一个update，undolog会记录一个相反的update。
+    - Undo Log存储：undo log采用段的方式管理和记录。在innodb数据文件中包含一种rollback segment回滚段，内部包含1024个undo log segment。可以通过下面一组参数来控制Undo log存储。
+    ```mysql
+        show variables like '%innodb_undo%';
+    ```
+
+- **Undo Log作用**
+    - 实现事务的原子性
+        - Undo Log 是为了实现事务的原子性而出现的产物。事务处理过程中，如果出现了错误或者用户执行了 ROLLBACK 语句，MySQL 可以利用 Undo Log 中的备份将数据恢复到事务开始之前的状态。
+    - 实现多版本并发控制（MVCC）
+        - Undo Log 在 MySQL InnoDB 存储引擎中用来实现多版本并发控制。事务未提交之前，Undo Log 保存了未提交之前的版本数据，Undo Log 中的数据可作为数据旧版本快照供其他并发事务进行快照读。
+        ![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-undo-log.png)
+
+    事务A手动开启事务，执行更新操作，首先会把更新命中的数据备份到 Undo Buffer 中。
+    事务B手动开启事务，执行查询操作，会读取 Undo 日志数据返回，进行快照读
+
 #### 6)、Redo Log和Binlog
 
+Redo Log和Binlog是MySQL日志系统中非常重要的两种机制，也有很多相似之处，下面介绍下两者细节和区别。
 
+- **Redo Log日志**
+    - Redo Log介绍
+        - Redo：顾名思义就是重做。以恢复操作为目的，在数据库发生意外时重现操作。
+        - Redo Log：指事务中修改的任何数据，将最新的数据备份存储的位置（Redo Log），被称为重做日志。
+        - Redo Log 的生成和释放：随着事务操作的执行，就会生成Redo Log，在事务提交时会将产生Redo Log写入Log Buffer，并不是随着事务的提交就立刻写入磁盘文件。等事务操作的脏页写入到磁盘之后，Redo Log 的使命也就完成了，Redo Log占用的空间就可以重用（被覆盖写入）。
+    - Redo Log工作原理
+    Redo Log 是为了实现事务的持久性而出现的产物。防止在发生故障的时间点，尚有脏页未写入表的 IBD 文件中，在重启 MySQL 服务的时候，根据 Redo Log 进行重做，从而达到事务的未入磁盘数据进行持久化这一特性。
+    ![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-redo-log.png)
+    - Redo Log写入机制
+    Redo Log 文件内容是以顺序循环的方式写入文件，写满时则回溯到第一个文件，进行覆盖写。
+
+    ![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-redo-log-write.png)
+
+    如图所示：
+        - write pos 是当前记录的位置，一边写一边后移，写到最后一个文件末尾后就回到 0 号文件开头；
+        - checkpoint 是当前要擦除的位置，也是往后推移并且循环的，擦除记录前要把记录更新到数据文件；
+
+        write pos 和 checkpoint 之间还空着的部分，可以用来记录新的操作。如果 write pos 追上checkpoint，表示写满，这时候不能再执行新的更新，得停下来先擦掉一些记录，把 checkpoint推进一下。
+    
+    以上机制为 crash-safe ，Innodb 出现故障时的自动恢复机制。
+    - Redo Log相关配置参数
+
+    每个InnoDB存储引擎至少有1个重做日志文件组（group），每个文件组至少有2个重做日志文件，默认为ib_logfile0和ib_logfile1。可以通过下面一组参数控制Redo Log存储：
+    
+        - show variables like '%innodb_log%';
+    Redo Buffer 持久化到 Redo Log 的策略，可通过 Innodb_flush_log_at_trx_commit 设置：
+        - 0：每秒提交 Redo buffer ->OS cache -> flush cache to disk，可能丢失一秒内的事务数据。由后台Master线程每隔 1秒执行一次操作。
+        - 1（默认值）：每次事务提交执行 Redo Buffer -> OS cache -> flush cache to disk，最安全，性能最差的方式。
+        - 2：每次事务提交执行 Redo Buffer -> OS cache，然后由后台Master线程再每隔1秒执行OS cache -> flush cache to disk 的操作。
+    一般建议选择取值2，因为 MySQL 挂了数据没有损失，整个服务器挂了才会损失1秒的事务提交数据。
+    ![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-redo-type.png)
+
+- **Binlog日志**
+    - Binlog记录模式
+    Redo Log 是属于InnoDB引擎所特有的日志，而MySQL Server也有自己的日志，即 Binarylog（二进制日志），简称Binlog。Binlog是记录所有数据库表结构变更以及表数据修改的二进制日志，不会记录SELECT和SHOW这类操作。Binlog日志是以事件形式记录，还包含语句所执行的消耗时间。开启Binlog日志有以下两个最重要的使用场景。
+
+        - 主从复制：在主库中开启Binlog功能，这样主库就可以把Binlog传递给从库，从库拿到Binlog后实现数据恢复达到主从数据一致性。
+        - 数据恢复：通过mysqlbinlog工具来恢复数据。
+
+        Binlog文件名默认为“主机名_binlog-序列号”格式，例如oak_binlog-000001，也可以在配置文件中指定名称。文件记录模式有STATEMENT、ROW和MIXED三种，具体含义如下。
+        
+        - ROW（row-based replication, RBR）：日志中会记录每一行数据被修改的情况，然后在slave端对相同的数据进行修改。
+            - 优点：能清楚记录每一个行数据的修改细节，能完全实现主从数据同步和数据的恢复。
+            - 缺点：批量操作，会产生大量的日志，尤其是alter table会让日志暴涨。
+      
+        - STATMENT（statement-based replication, SBR）：每一条被修改数据的SQL都会记录到master的Binlog中，slave在复制的时候SQL进程会解析成和原来master端执行过的相同的SQL再次执行。简称SQL语句复制。
+            - 优点：日志量小，减少磁盘IO，提升存储和恢复速度
+            - 缺点：在某些情况下会导致主从数据不一致，比如last_insert_id()、now()等函数。
+      
+        - MIXED（mixed-based replication, MBR）：以上两种模式的混合使用，一般会使用STATEMENT模式保存binlog，对于STATEMENT模式无法复制的操作使用ROW模式保存binlog，MySQL会根据执行的SQL语句选择写入模式。
+    
+    - Binlog文件结构
+    MySQL的binlog文件中记录的是对数据库的各种修改操作，用来表示修改操作的数据结构是Logevent。不同的修改操作对应的不同的log event。比较常用的log event有：Query event、Row event、Xid event等。binlog文件的内容就是各种Log event的集合。
+    Binlog文件中Log event结构如下图所示：
+        ![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-binlog.png)
+    - Binlog写入机制
+        - 根据记录模式和操作触发event事件生成log event（事件触发执行机制）
+        - 将事务执行过程中产生log event写入缓冲区，每个事务线程都有一个缓冲区
+        Log Event保存在一个binlog_cache_mngr数据结构中，在该结构中有两个缓冲区，一个是stmt_cache，用于存放不支持事务的信息；另一个是trx_cache，用于存放支持事务的信息。
+        - 事务在提交阶段会将产生的log event写入到外部binlog文件中。
+        不同事务以串行方式将log event写入binlog文件中，所以一个事务包含的log event信息在binlog文件中是连续的，中间不会插入其他事务的log event。
+    - Binlog文件操作
+        - Binlog状态查看
+            ```mysql
+                show variables like 'log_bin';
+            ```
+        - 开启Binlog功能
+            ```mysql
+                mysql> set global log_bin=mysqllogbin;
+                ERROR 1238 (HY000): Variable 'log_bin' is a read only variable
+            ``` 
+            需要修改my.cnf或my.ini配置文件，在[mysqld]下面增加log_bin=mysql_bin_log，重启MySQL服务。
+            ```properties
+                #log-bin=ON
+                #log-bin-basename=mysqlbinlog
+                binlog-format=ROW
+                log-bin=mysqlbinlog
+            ```
+        - 使用show binlog events命令
+            ```mysql
+                show binary logs; //等价于show master logs;
+                show master status;
+                show binlog events;
+                show binlog events in 'mysqlbinlog.000001';
+            ```
+        - 使用mysqlbinlog 命令
+            ```mysql
+                mysqlbinlog "文件名"
+                mysqlbinlog "文件名" > "test.sql"
+            ```
+        - 使用 binlog 恢复数据
+            ```mysql
+                //按指定时间恢复
+                mysqlbinlog --start-datetime="2020-04-25 18:00:00" --stop-
+                datetime="2020-04-26 00:00:00" mysqlbinlog.000002 | mysql -uroot -p1234
+                //按事件位置号恢复
+                mysqlbinlog --start-position=154 --stop-position=957 mysqlbinlog.000002
+                | mysql -uroot -p1234
+            ```
+            mysqldump：定期全部备份数据库数据。mysqlbinlog可以做增量备份和恢复操作。
+        - 删除Binlog文件
+        ```mysql
+            purge binary logs to 'mysqlbinlog.000001'; //删除指定文件
+            purge binary logs before '2020-04-28 00:00:00'; //删除指定时间之前的文件
+            reset master; //清除所有文件
+        ```
+        可以通过设置expire_logs_days参数来启动自动清理功能。默认值为0表示没启用。设置为1表示超出1天binlog文件会自动删除掉。
+    - Redo Log和Binlog区别
+        - Redo Log是属于InnoDB引擎功能，Binlog是属于MySQL Server自带功能，并且是以二进制文件记录。
+        - Redo Log属于物理日志，记录该数据页更新状态内容，Binlog是逻辑日志，记录更新过程。
+        - Redo Log日志是循环写，日志空间大小是固定，Binlog是追加写入，写完一个写下一个，不会覆盖使用。
+        - Redo Log作为服务器异常宕机后事务数据自动恢复使用，Binlog可以作为主从复制和数据恢复使用。Binlog没有自动crash-safe能力。
 
 ## 二、MySQL索引原理
 
 ### 2.1、索引类型
 
+索引可以提升查询速度，会影响where查询，以及order by排序。MySQL索引类型如下：
+
+- 从索引存储结构划分：B Tree索引、Hash索引、FULLTEXT全文索引、R Tree索引
+- 从应用层次划分：普通索引、唯一索引、主键索引、复合索引
+- 从索引键值类型划分：主键索引、辅助索引（二级索引）
+- 从数据存储和索引键值逻辑关系划分：聚集索引（聚簇索引）、非聚集索引（非聚簇索引）
+
+#### 1）、普通索引
+
+这是最基本的索引类型，基于普通字段建立的索引，没有任何限制。
+
+创建普通索引的方法如下：
+
+- CREATE INDEX <索引的名字> ON tablename (字段名);
+- ALTER TABLE tablename ADD INDEX [索引的名字] (字段名);
+- CREATE TABLE tablename ( [...], INDEX [索引的名字] (字段名) );
+
+#### 2）、唯一索引
+
+与"普通索引"类似，不同的就是：索引字段的值必须唯一，但允许有空值 。在创建或修改表时追加唯一约束，就会自动创建对应的唯一索引。
+
+创建唯一索引的方法如下：
+
+- CREATE UNIQUE INDEX <索引的名字> ON tablename (字段名);
+- ALTER TABLE tablename ADD UNIQUE INDEX [索引的名字] (字段名);
+- CREATE TABLE tablename ( [...], UNIQUE [索引的名字] (字段名) ;
+
+#### 3）、主键索引
+
+它是一种特殊的唯一索引，不允许有空值。在创建或修改表时追加主键约束即可，每个表只能有一个主键。
+
+创建主键索引的方法如下：
+
+- CREATE TABLE tablename ( [...], PRIMARY KEY (字段名) );
+- ALTER TABLE tablename ADD PRIMARY KEY (字段名);
+
+#### 4）、复合索引
+
+单一索引是指索引列为一列的情况，即新建索引的语句只实施在一列上；用户可以在多个列上建立索引，这种索引叫做组复合索引（组合索引）。复合索引可以代替多个单一索引，相比多个单一索引复合索引所需的开销更小。
+
+索引同时有两个概念叫做窄索引和宽索引，窄索引是指索引列为1-2列的索引，宽索引也就是索引列超过2列的索引，设计索引的一个重要原则就是能用窄索引不用宽索引，因为窄索引往往比组合索引更有效。
+
+创建组合索引的方法如下：
+
+- CREATE INDEX <索引的名字> ON tablename (字段名1，字段名2...);
+- ALTER TABLE tablename ADD INDEX [索引的名字] (字段名1，字段名2...);
+- CREATE TABLE tablename ( [...], INDEX [索引的名字] (字段名1，字段名2...) );
+
+复合索引使用注意事项：
+
+- 何时使用复合索引，要根据where条件建索引，注意不要过多使用索引，过多使用会对更新操作效率有很大影响。
+- 如果表已经建立了(col1，col2)，就没有必要再单独建立（col1）；如果现在有(col1)索引，如果查询需要col1和col2条件，可以建立(col1,col2)复合索引，对于查询有一定提高。
+
+
+#### 5）、全文索引
+
+查询操作在数据量比较少时，可以使用like模糊查询，但是对于大量的文本数据检索，效率很低。如果使用全文索引，查询速度会比like快很多倍。在MySQL 5.6 以前的版本，只有MyISAM存储引擎支持全文索引，从MySQL 5.6开始MyISAM和InnoDB存储引擎均支持。
+
+创建全文索引的方法如下：
+
+- CREATE FULLTEXT INDEX <索引的名字> ON tablename (字段名);
+- ALTER TABLE tablename ADD FULLTEXT [索引的名字] (字段名);
+- CREATE TABLE tablename ( [...], FULLTEXT KEY [索引的名字] (字段名) ;
+
+和常用的like模糊查询不同，全文索引有自己的语法格式，使用 match 和 against 关键字，比如
+
+```mysql
+    select * from user where match(name) against('aaa');
+```
+
+全文索引使用注意事项：
+
+- 全文索引必须在字符串、文本字段上建立。
+- 全文索引字段值必须在最小字符和最大字符之间的才会有效。（innodb：3-84；myisam：4-84）
+- 全文索引字段值要进行切词处理，按syntax字符进行切割，例如b+aaa，切分成b和aaa
+- 全文索引匹配查询，默认使用的是等值匹配，例如a匹配a，不会匹配ab,ac。如果想匹配可以在布尔模式下搜索a*
+
+```mysql
+    select * from user where match(name) against('a*' in boolean mode);
+```
+
 ### 2.2、索引原理
 
+MySQL官方对索引定义：是存储引擎用于快速查找记录的一种数据结构。需要额外开辟空间和数据维护工作。
+
+- 索引是物理数据页存储，在数据文件中（InnoDB，ibd文件），利用数据页(page)存储。
+- 索引可以加快检索速度，但是同时也会降低增删改操作速度，索引维护需要代价。
+
+索引涉及的理论知识：**二分查找法**、**Hash**和**B+Tree**。
+
+#### 1）、二分查找法
+
+二分查找法也叫作折半查找法，它是在有序数组中查找指定数据的搜索算法。它的优点是等值查询、范围查询性能优秀，缺点是更新数据、新增数据、删除数据维护成本高。
+
+- 首先定位left和right两个指针
+- 计算(left+right)/2
+- 判断除2后索引位置值与目标值的大小比对
+- 索引位置值大于目标值就-1，right移动；如果小于目标值就+1，left移动
+
+举个例子，下面的有序数组有17 个值，查找的目标值是7，过程如下：
+
+- 第一次查找
+
+![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-half-query-001.png)
+
+- 第二次查找
+
+![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-half-query-002.png)
+
+- 第三次查找
+
+![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-half-query-003.png)
+
+- 第四次查找
+
+![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-half-query-004.png)
+
+#### 2）、Hash结构
+
+Hash底层实现是由Hash表来实现的，是根据键值 <key,value> 存储数据的结构。非常适合根据key查找value值，也就是单个key查询，或者说等值查询。其结构如下所示：
+
+![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-hash-query-001.png)
+
+从上面结构可以看出，Hash索引可以方便的提供等值查询，但是对于范围查询就需要全表扫描了。
+
+Hash索引在MySQL中Hash结构主要应用在Memory原生的Hash索引 、InnoDB自适应哈希索引。
+
+InnoDB提供的自适应哈希索引功能强大，接下来重点描述下InnoDB自适应哈希索引。
+
+InnoDB自适应哈希索引是为了提升查询效率，InnoDB存储引擎会监控表上各个索引页的查询，当InnoDB注意到某些索引值访问非常频繁时，会在内存中基于B+Tree索引再创建一个哈希索引，使得内存中的 B+Tree 索引具备哈希索引的功能，即能够快速定值访问频繁访问的索引页。
+
+InnoDB自适应哈希索引：在使用Hash索引访问时，一次性查找就能定位数据，等值查询效率要优于B+Tree。
+
+自适应哈希索引的建立使得InnoDB存储引擎能自动根据索引页访问的频率和模式自动地为某些热点页建立哈希索引来加速访问。另外InnoDB自适应哈希索引的功能，用户只能选择开启或关闭功能，无法进行人工干涉。
+
+```mysql
+    show engine innodb status \G;
+    show variables like '%innodb_adaptive%';
+```
+
+#### 3）、B+Tree结构
+
+MySQL数据库索引采用的是B+Tree结构，在B-Tree结构上做了优化改造。
+
+- **B-Tree结构**
+    - 索引值和data数据分布在整棵树结构中
+    - 每个节点可以存放多个索引值及对应的data数据
+    - 树节点中的多个索引值从左到右升序排列
+    ![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-b-tree-001.png)
+
+    B树的搜索：从根节点开始，对节点内的索引值序列采用二分法查找，如果命中就结束查找。没有命中会进入子节点重复查找过程，直到所对应的的节点指针为空，或已经是叶子节点了才结束。
+
+- **B+Tree结构**
+    - 非叶子节点不存储data数据，只存储索引值，这样便于存储更多的索引值
+    - 叶子节点包含了所有的索引值和data数据
+    - 叶子节点用指针连接，提高区间的访问性能
+    ![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-b+tree-001.png)
+
+    相比B树，B+树进行范围查找时，只需要查找定位两个节点的索引值，然后利用叶子节点的指针进行遍历即可。而B树需要遍历范围内所有的节点和数据，显然B+Tree效率高。
+
+#### 4）、聚簇索引和辅助索引 
+
+**聚簇索引和非聚簇索引**：B+Tree的叶子节点存放主键索引值和行记录就属于聚簇索引；如果索引值和行记录分开存放就属于非聚簇索引。
+
+**主键索引和辅助索引**：B+Tree的叶子节点存放的是主键字段值就属于主键索引；如果存放的是非主键值就属于辅助索引（二级索引）。
+
+在InnoDB引擎中，主键索引采用的就是聚簇索引结构存储。
+
+- 聚簇索引（聚集索引）
+
+聚簇索引是一种数据存储方式，InnoDB的聚簇索引就是按照主键顺序构建 B+Tree结构。B+Tree的叶子节点就是行记录，行记录和主键值紧凑地存储在一起。 这也意味着 InnoDB 的主键索引就是数据表本身，它按主键顺序存放了整张表的数据，占用的空间就是整个表数据量的大小。通常说的**主键索引**就是聚集索引。
+
+InnoDB的表要求必须要有聚簇索引：
+
+1. 如果表定义了主键，则主键索引就是聚簇索引
+2. 如果表没有定义主键，则第一个非空unique列作为聚簇索引
+3. 否则InnoDB会从建一个隐藏的row-id作为聚簇索引
+
+- 辅助索引
+
+InnoDB辅助索引，也叫作二级索引，是根据索引列构建 B+Tree结构。但在 B+Tree 的叶子节点中只存了索引列和主键的信息。二级索引占用的空间会比聚簇索引小很多， 通常创建辅助索引就是为了提升查询效率。一个表InnoDB只能创建一个聚簇索引，但可以创建多个辅助索引。
+
+![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-index-001.png)
+
+- 非聚簇索引
+
+与InnoDB表存储不同，MyISAM数据表的索引文件和数据文件是分开的，被称为非聚簇索引结构。
+
+![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-index-002.png)
+
+
 ### 2.3、索引分析与优化
+
+#### 1）、EXPLAIN
+
+MySQL 提供了一个 EXPLAIN 命令，它可以对 SELECT 语句进行分析，并输出 SELECT 执行的详细信息，供开发人员有针对性的优化。例如：
+
+```mysql
+    EXPLAIN SELECT * from user WHERE id < 3;
+```
+EXPLAIN 命令的输出内容大致如下：
+
+![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-explain-001.png)
+
+- select_type
+    - 表示查询的类型。常用的值如下：
+        - SIMPLE ： 表示查询语句不包含子查询或union
+        - PRIMARY：表示此查询是最外层的查询
+        - UNION：表示此查询是UNION的第二个或后续的查询 
+        - DEPENDENT UNION：UNION中的第二个或后续的查询语句，使用了外面查询结果
+        - UNION RESULT：UNION的结果
+        - SUBQUERY：SELECT子查询语句
+        - DEPENDENT SUBQUERY：SELECT子查询语句依赖外层查询的结果。
+
+最常见的查询类型是SIMPLE，表示我们的查询没有子查询也没用到UNION查询。
+
+- type 
+    - 表示存储引擎查询数据时采用的方式。比较重要的一个属性，通过它可以判断出查询是全表扫描还是基于索引的部分扫描。常用属性值如下，从上至下效率依次增强。
+        - ALL：表示全表扫描，性能最差。
+        - index：表示基于索引的全表扫描，先扫描索引再扫描全表数据。
+        - range：表示使用索引范围查询。使用>、>=、<、<=、in等等。
+        - ref：表示使用非唯一索引进行单值查询。
+        - eq_ref：一般情况下出现在多表join查询，表示前面表的每一个记录，都只能匹配后面表的一行结果。
+        - const：表示使用主键或唯一索引做等值查询，常量查询。
+        - NULL：表示不用访问表，速度最快。
+
+- possible_keys
+    - 表示查询时能够使用到的索引。注意并不一定会真正使用，显示的是索引名称。
+
+- key
+    - 表示查询时真正使用到的索引，显示的是索引名称。
+
+- rows
+    - MySQL查询优化器会根据统计信息，估算SQL要查询到结果需要扫描多少行记录。原则上rows是越少效率越高，可以直观的了解到SQL效率高低。
+
+- key_len
+    - 表示查询使用了索引的字节数量。可以判断是否全部使用了组合索引。
+    key_len的计算规则如下：
+        - 字符串类型
+            - 字符串长度跟字符集有关：latin1=1、gbk=2、utf8=3、utf8mb4=4
+            - char(n)：n*字符集长度
+            - varchar(n)：n * 字符集长度 + 2字节
+        - 数值类型
+            - TINYINT：1个字节
+            - SMALLINT：2个字节
+            - MEDIUMINT：3个字节
+            - INT、FLOAT：4个字节
+            - BIGINT、DOUBLE：8个字节
+        - 时间类型
+            - DATE：3个字节
+            - TIMESTAMP：4个字节
+            - DATETIME：8个字节
+        - 字段属性
+            - NULL属性占用1个字节，如果一个字段设置了NOT NULL，则没有此项。
+
+- Extra
+    - Extra表示很多额外的信息，各种操作会在Extra提示相关信息，常见几种如下：
+        - Using where
+            - 表示查询需要通过索引回表查询数据。
+        - Using index
+            - 表示查询需要通过索引，索引就可以满足所需数据。
+        - Using filesort
+            - 表示查询出来的结果需要额外排序，数据量小在内存，大的话在磁盘，因此有Using filesort 建议优化。
+        - Using temprorary
+            - 查询使用到了临时表，一般出现于去重、分组等操作。
+
+#### 2）、回表查询
+#### 3）、覆盖索引
+#### 4）、最左前缀原则
+#### 5）、LIKE查询
+#### 6）、NULL查询
+#### 7）、索引与排序
+#### 8）、LIKE查询
+
 
 ### 2.4、查询优化
 
@@ -542,3 +1030,13 @@ MyISAM表对应三个文件，一个.frm表结构文件，一个MYD表数据文�
 ### 6.6、ELK
 
 ### 6.7、Prometheus 
+
+
+
+
+
+
+## 七、推荐阅读
+
+- [《MySQL 实战 45 讲》](https://time.geekbang.org/column/intro/100020801?tab=catalog) 林晓斌 网名丁奇，腾讯云数据库负责人
+- [《MySQL 是怎样运行的：从根儿上理解 MySQL》](https://juejin.cn/book/6844733769996304392/) 小孩子4919 公众号 『我们都是小青蛙』
