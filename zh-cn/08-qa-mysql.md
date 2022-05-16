@@ -979,10 +979,110 @@ EXPLAIN 命令的输出内容大致如下：
 - 将被查询的字段，建立到组合索引。
 
 #### 4）、最左前缀原则
+
+复合索引使用时遵循最左前缀原则，最左前缀顾名思义，就是最左优先，即查询中使用到最左边的列，那么查询就会使用到索引，如果从索引的第二列开始查找，索引将失效。
+
+![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-index-left.png)
+
 #### 5）、LIKE查询
+
+**面试题：MySQL在使用like模糊查询时，索引能不能起作用？**
+
+回答：MySQL在使用Like模糊查询时，索引是可以被使用的，只有把%字符写在后面才会使用到索引。
+
+select * from user where name like '%o%'; //不起作用
+
+select * from user where name like 'o%'; //起作用
+
+select * from user where name like '%o'; //不起作用
+
 #### 6）、NULL查询
+
+**面试题：如果MySQL表的某一列含有NULL值，那么包含该列的索引是否有效？**
+
+对MySQL来说，NULL是一个特殊的值，从概念上讲，NULL意味着“一个未知值”，它的处理方式与其他值有些不同。比如：不能使用=，<，>这样的运算符，对NULL做算术运算的结果都是NULL，count时不会包括NULL行等，NULL比空字符串需要更多的存储空间等。
+
+```text
+“NULL columns require additional space in the row to record whether their values
+are NULL. For MyISAM tables, each NULL column takes one bit extra, rounded up to
+the nearest byte.”
+```
+
+NULL列需要增加额外空间来记录其值是否为NULL。对于MyISAM表，每一个 NULL 列额外占用一位，四舍五入到最接近的字节。
+
+![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-index-null.png)
+
+虽然MySQL可以在含有NULL的列上使用索引，但NULL和其他数据还是有区别的，不建议列上允许为NULL。最好设置NOT NULL，并给一个默认值，比如0和 ‘’ 空字符串等，如果是datetime类型，也可以设置系统当前时间或某个固定的特殊值，例如'1970-01-01 00:00:00'。
+
+
 #### 7）、索引与排序
-#### 8）、LIKE查询
+
+MySQL查询支持filesort和index两种方式的排序。
+
+- filesort是先把结果查出，然后在缓存或磁盘进行排序操作，效率较低。
+- 使用index是指利用索引自动实现排序，不需另做排序操作，效率会比较高。
+
+filesort有两种排序算法：**双路排序**和**单路排序**。
+
+- 双路排序：需要两次磁盘扫描读取，最终得到用户数据。第一次将排序字段读取出来，然后排序；第二次去读取其他字段数据。
+- 单路排序：从磁盘查询所需的所有列数据，然后在内存排序将结果返回。如果查询数据超出缓存sort_buffer，会导致多次磁盘读取操作，并创建临时表，最后产生了多次IO，反而会增加负担。解决方案：少使用select *；增加sort_buffer_size容量和max_length_for_sort_data容量。
+
+如果我们Explain分析SQL：
+
+- 结果中Extra属性显示Using filesort，表示使用了filesort排序方式，需要优化。
+- 如果Extra属性显示Using index时，表示覆盖索引，也表示所有操作在索引上完成，也可以使用index排序方式，建议大家尽可能采用覆盖索引。
+
+**以下几种情况，会使用index方式的排序**
+
+- ORDER BY 子句索引列组合满足索引最左前列
+
+```mysql
+    explain select id from user order by id; //对应(id)、(id,name)索引有效
+```
+
+- WHERE子句+ORDER BY子句索引列组合满足索引最左前列
+
+```mysql
+    explain select id from user where age=18 order by name; //对应(age,name)索引
+```
+
+**以下几种情况，会使用filesort方式的排序**
+
+- 对索引列同时使用了ASC和DESC
+
+```mysql
+    explain select id from user order by age asc,name desc; //对应(age,name)索引
+```
+
+- WHERE子句和ORDER BY子句满足最左前缀，但where子句使用了范围查询（例如>、<、in等）
+
+```mysql
+    explain select id from user where age>10 order by name; //对应(age,name)索引
+```
+
+- ORDER BY或者WHERE+ORDER BY索引列没有满足索引最左前列
+
+```mysql
+    explain select id from user order by name;  //对应(age,name)索引
+```
+
+- 使用了不同的索引，MySQL每次只采用一个索引，ORDER BY涉及了两个索引
+
+```mysql
+    explain select id from user order by name,age; //对应(name)、(age)两个索引
+```
+
+- WHERE子句与ORDER BY子句，使用了不同的索引
+
+```mysql
+    explain select id from user where name='tom' order by age; //对应(name)、(age)索引
+```
+
+- WHERE子句或者ORDER BY子句中索引列使用了表达式，包括函数表达式
+
+```mysql
+    explain select id from user order by abs(age); //对应(age)索
+```
 
 
 ### 2.4、查询优化
