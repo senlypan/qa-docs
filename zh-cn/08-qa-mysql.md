@@ -1334,7 +1334,7 @@ MVCC（Multi Version Concurrency Control）被称为多版本控制，是指在�
 
 **MVCC实现原理**
 
-MVCC最大的好处是读不加锁，读写不冲突。在读多写少的系统应用中，读写不冲突是非常重要的，极大的提升系统的并发性能，这也是为什么现阶段几乎所有的关系型数据库都支持 MVCC 的原因，不过目前MVCC只在 Read Commited 和 Repeatable Read 两种隔离级别下工作。
+MVCC最大的好处是**读不加锁，读写不冲突**。在读多写少的系统应用中，读写不冲突是非常重要的，极大的提升系统的并发性能，这也是为什么现阶段几乎所有的关系型数据库都支持 MVCC 的原因，**不过目前MVCC只在 Read Commited 和 Repeatable Read 两种隔离级别下工作**。
 
 在 MVCC 并发控制中，读操作可以分为两类: **快照读**（Snapshot Read）与**当前读** （Current Read）。
 
