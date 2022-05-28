@@ -86,7 +86,8 @@
 
 * 八、数据存储
 
-  * [MySQL数据库](/zh-cn/08-qa-mysql.md)
+  * [理解MySQL](/zh-cn/08-qa-mysql.md)
+  * [理解缓存中间件](/zh-cn/08-cache-all.md)
   * [redis](/zh-cn/08-redis.md)
   * [Fastdfs](/zh-cn/00-404.md)
   * [MongoDB](/zh-cn/00-404.md)
@@ -96,7 +97,6 @@
   * [全局ID方案](/zh-cn/00-404.md)
   * [分布式会话](/zh-cn/00-404.md)
   * [分布式锁](/zh-cn/08-distributed-locking.md) 
-  * [理解缓存](/zh-cn/08-cache-all.md)
   * [时序数据库](/zh-cn/00-404.md)
   * [nosql数据结构对比](/zh-cn/00-404.md)
 
@@ -123,10 +123,12 @@
 
 * 十一、消息中间件
 
-  * [消息中间件问题](/zh-cn/00-404.md)
+  * [理解消息中间件](/zh-cn/11-mq.md)
   * [rabbitmq](/zh-cn/00-404.md)
-  * [kafka](/zh-cn/00-404.md)
   * [rocketmq](/zh-cn/00-404.md)
+  * [kafka](/zh-cn/00-404.md)
+  * [pulsar](/zh-cn/00-404.md)
+  * [消息中间件问题](/zh-cn/00-404.md)
   * [消息中间件选型](/zh-cn/00-404.md)
 
 * 十二、负载与代理
