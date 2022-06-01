@@ -2876,3 +2876,9 @@ select count(id) cont ,address from v_tuser group by address order by address;
 
 - [《MySQL 实战 45 讲》](https://time.geekbang.org/column/intro/100020801?tab=catalog) 林晓斌 网名丁奇，腾讯云数据库负责人
 - [《MySQL 是怎样运行的：从根儿上理解 MySQL》](https://juejin.cn/book/6844733769996304392/) 小孩子4919 公众号 『我们都是小青蛙』
+
+## QA
+
+### 1、kafka的索引通过二分法索引到数据，mysql的页槽也采用了二分查找的方式。为什么kafaka不直接在消息上进行二分查找？而mysql不直接在数据上二分查找？而是都通过索引先进行二分查找再寻至具体消息或数据，是不是多此一举？
+
+- 因为kafka实际消息和mysql实际数据的体积大、寻址范围大，二分查找需要把数据加载到内存中，如果直接在数据上做二分查找，那么需要加载的数据特别多，对内存造成压力，另外寻址范围增大，对磁盘的读取也不友好，所以用索引二分。
