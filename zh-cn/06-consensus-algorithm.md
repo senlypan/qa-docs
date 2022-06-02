@@ -95,17 +95,37 @@ Basic Paxos 角色介绍
 - Client : 民众（客户端）。服务系统外部角色，请求发起者。
 - Propser : 提出提案。接收 Client 请求并向集群节点提出提案（propose），提案信息包括提案编号和提议的 value，并在冲突发生时，起到冲突调节作用。
 - Accpetor(Voter) : acceptor 收到提案后可以接受（accept）提案，若提案获得多数派（majority）的 acceptors 的接受，则称该提案被批准（chosen）。
-- Learner :  只能「学习」（记录）被批准的提案。
+- Learner :  只能「学习」被批准的提案。backup，备份，对集群一致性无影响，单纯记录。
 
-划分角色后，就可以更加精确的定义问题：
-
-1. 决议（value）只有在被 proposers 提出后才能被批准（未经批准的决议称为「提案（proposal）」）；
-2. 在一次 Paxos 算法的执行实例中，只批准（chosen）一个 value；
-3. learners 只能获得被批准（chosen）的 value。
 
 > 在Leslie Lamport 之后发表的paper中将majority 替换为更通用的quorum 概念，但在描述classic paxos的论文  Paxos made simple（页面存档备份，存于互联网档案馆） 中使用的还是majority的概念。
 
+Basic Paxos 存在的问题
+
+- 难实现
+- 效率低（2轮RPC:request > prepare > promise > accept! > accepted ）
+- 活锁（liveness）或 dueling
+
+因此出现 Multi Paxos 
+
+- 新概念，Leader：唯一的proposer，所有请求都需经过此Leader。
+- 可以理解为 proposer 竞选为 master , 而其余 acceptor 为 follower。
+- multi paxos 减少了角色，进一步简化了流程（首次选主，后续直接accept!和accepted）
+
 -- 内容参考[wiki:Paxos算法](https://zh.wikipedia.org/zh-hk/Paxos%E7%AE%97%E6%B3%95)
+
+#### Raft
+
+- 划分成三个子问题
+    - Leader Election
+    - Log Replication
+    - Safety
+- 重定义角色
+    - Leader
+    - Follower
+    - Candidate
+- 原理动画解释：http://thesecretlivesofdata.com/raft/
+- 场景测试：https://raft.github.io/
 
 ## 二、 延伸
 
