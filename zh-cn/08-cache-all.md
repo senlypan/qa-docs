@@ -1,9 +1,10 @@
 # 理解缓存
 
+![访问统计](https://visitor-badge.glitch.me/badge?page_id=08-cache-all&left_color=blue&right_color=red)
+
 > 作者: 潘深练
 >
 > 创建: 2022-04-16
-
 
 ## 脑图加载中...
 

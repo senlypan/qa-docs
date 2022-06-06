@@ -1,5 +1,7 @@
 # MySQL数据库
 
+![访问统计](https://visitor-badge.glitch.me/badge?page_id=08-qa-mysql&left_color=blue&right_color=red)
+
 > 作者: 潘深练
 >
 > 创建: 2022-03-31

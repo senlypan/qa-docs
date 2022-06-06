@@ -1,9 +1,10 @@
 # 架构目标
 
+![访问统计](https://visitor-badge.glitch.me/badge?page_id=senlypan.qa.06-architecture-target&left_color=blue&right_color=red)
+
 > 作者: 潘深练
 >
 > 创建: 2022-04-18
-
 
 ## 架构设计目标
 

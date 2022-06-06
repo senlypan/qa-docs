@@ -1,5 +1,7 @@
 # 分布式锁
 
+![访问统计](https://visitor-badge.glitch.me/badge?page_id=08-distributed-locking&left_color=blue&right_color=red)
+
 > 作者: 潘深练
 >
 > 创建: 2022-05-11
@@ -12,5 +14,5 @@ Martin Kleppmann 分析了 Redis 的 RedLock 算法写了一篇文章 [《How to
 
 而 redission 看门狗不断续期，其实也就是在保持心跳，但也还是不能从根本上解决假死问题，只要发生假死，心跳都会发不出去，即使是 zk 也会误认为机器已经挂了。因此根本的问题核心出在分布式的基本问题上：**网络不可靠**。
 
-其中 zk 之所以会被认为比 redis 可靠，其实是因为它的持久化机制，假如 redis 配上 共识算法，配上集群，配上 aof，也能达到 ZK 同样的效果。
+其中 zk 之所以会被认为比 redis 可靠，其实是因为它的持久化机制，假如 redis 配上共识算法，配上集群，配上 aof，也能达到 ZK 同样的效果。
 

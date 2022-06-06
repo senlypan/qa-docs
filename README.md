@@ -1,5 +1,7 @@
 # 潘深练的QA手册
 
+![访问统计](https://visitor-badge.glitch.me/badge?page_id=senlypan.qa.readme&left_color=blue&right_color=red)
+
 ![icon](http://qa.panshenlian.com/_media/icon200.png)
 
 > 这是一本 Java 方向的学习手册，随着时间的积累，它会越来越丰满，希望对后来的你有用。

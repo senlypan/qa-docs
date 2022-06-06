@@ -1,5 +1,7 @@
 # 理解IO/TCPIP/Socket/Netty
 
+![访问统计](https://visitor-badge.glitch.me/badge?page_id=senlypan.qa.03-io-to-netty&left_color=blue&right_color=red)
+
 > 作者: 潘深练
 >
 > 创建: 2022-03-16

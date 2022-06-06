@@ -31,7 +31,7 @@
 * 五、框架基础
 
   * [JavaWeb/JDBC](/zh-cn/00-404.md)
-  * [Mybatis](/zh-cn/00-404.md)
+  * [Mybatis](/zh-cn/05-mybatis.md)
   * [ORM框架分析](/zh-cn/00-404.md)
   * [Spring](/zh-cn/05-spring.md)
   * [SpringBoot](/zh-cn/00-404.md)
