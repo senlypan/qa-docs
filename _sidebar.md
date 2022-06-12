@@ -45,6 +45,7 @@
   * [数据密集型应用](/zh-cn/06-data-intensive-application.md)
   * [认识分布式系统](/zh-cn/06-distributed-system-about.md)
   * [共识算法](/zh-cn/06-consensus-algorithm.md)
+  * [限流算法](/zh-cn/06-rate-limit-algorithm.md)
   * [分布式服务治理](/zh-cn/06-service-governance.md)
   * [分布式事务](/zh-cn/00-404.md)
   * [架构设计原则](/zh-cn/00-404.md)
