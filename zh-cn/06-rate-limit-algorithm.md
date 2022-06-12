@@ -247,9 +247,12 @@
 
 ## 思考
 
-限流算法基本在单机上进行思考设计，如果希望是做集群分布式限流设计，那其实很大可能影响到接口响应时间（RT），而且一般分布式限流设计会考虑异步统计并推送至各单机节点，那异步统计中时延和精确度又是个棘手的问题。
+限流算法基本在单机上进行思考设计，如果希望是做集群分布式限流设计，那其实很大可能影响到 **接口响应时间（RT）**，而且一般分布式限流设计会考虑异步统计并推送至各单机节点，那异步统计中 **时延** 和 **精确度** 又是个棘手的问题。
 
 ## 文献参考
 
 1、[Google Cloud - Rate-limiting strategies and techniques](https://cloud.google.com/architecture/rate-limiting-strategies-techniques)
+
 2、[知乎 - 限流算法小窥](https://zhuanlan.zhihu.com/p/336243181)
+
+3、[dev.to - Rate Limiting and Traffic Shaping](https://dev.to/swyx/networking-essentials-rate-limiting-and-traffic-shaping-43ii)
