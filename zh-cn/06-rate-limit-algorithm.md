@@ -256,3 +256,7 @@
 2、[知乎 - 限流算法小窥](https://zhuanlan.zhihu.com/p/336243181)
 
 3、[dev.to - Rate Limiting and Traffic Shaping](https://dev.to/swyx/networking-essentials-rate-limiting-and-traffic-shaping-43ii)
+
+4、[Figma - An alternative approach to rate limiting](https://www.figma.com/blog/an-alternative-approach-to-rate-limiting/)
+
+5、[classdojo - Better Rate Limiting With Redis Sorted Sets](https://engineering.classdojo.com/blog/2015/02/06/rolling-rate-limiter/)
