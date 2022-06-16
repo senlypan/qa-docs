@@ -1282,7 +1282,7 @@ InnoDB 支持的隔离性有 4 种，隔离性从低到高分别为：读未提�
 
 ACID 及它们之间的关系如下图所示，4个特性中有3个与 WAL 有关系，都需要通过 Redo、Undo 日志来保证等。
 
-WAL的全称为Write-Ahead Logging，先写日志，再写磁盘。
+WAL的全称为Write-Ahead Logging，先写日志，再写磁盘。**MySQL的 WAL 在 InnoDB 存储引擎中被称作 redo log 。**
 
 ![08-qa-mysql#001](../_media/images/08-qa-mysql/qa-mysql-acid-003.png)
 
