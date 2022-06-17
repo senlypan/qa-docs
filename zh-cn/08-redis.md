@@ -59,3 +59,21 @@ aof_delayed_fsync:0
     - 开启 aof >>> 数据安全性高，丢数据概率低，每秒或每次命令保存一次
 - 场景三：追求极致性能
     - 不开启持久化方案 >>> 必须有原始数据源（例如mysql），每次重启或故障后可以恢复数据
+
+
+### 3、RedisObject数据类型与数据结构
+
+Type/Structure           | SDS | LinkedList | ZipList | Dict | SkipList | IntSet
+----           | ----| ----  | ----  | ----  | ----  | ---- 
+String         | ✔️ | —— | —— | —— | —— | —— 
+List           | —— | ✔️ | ✔️ | —— | —— | —— 
+Hash           | —— | —— | ✔️ | ✔️ | —— | ——  
+Sorted Set     | —— | —— | ✔️ | —— | ✔️ | ——  
+Set            | —— | —— | —— | ✔️ | —— | ✔️ 
+
+**特殊类型：**
+
+- Bitmap
+- Geospatial
+- Stream
+- HyperLogLogs
