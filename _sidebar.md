@@ -208,6 +208,7 @@
 
 * 十九、安全防护
 
+  * [信息安全与加密算法](/zh-cn/19-info-security-and-encryption-algorithm.md)
   * [XSS攻防](/zh-cn/00-404.md)
   * [漏洞扫描 OpenVAS](/zh-cn/00-404.md)
   * [入侵侦测防御 Suricata](/zh-cn/00-404.md)

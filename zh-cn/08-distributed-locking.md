@@ -1,6 +1,6 @@
 # 分布式锁
 
-![访问统计](https://visitor-badge.glitch.me/badge?page_id=08-distributed-locking&left_color=blue&right_color=red)
+![访问统计](https://visitor-badge.glitch.me/badge?page_id=senlypan.qa.08-distributed-locking&left_color=blue&right_color=red)
 
 > 作者: 潘深练
 >

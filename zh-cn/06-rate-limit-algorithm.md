@@ -1,6 +1,6 @@
 # 限流算法
 
-![访问统计](https://visitor-badge.glitch.me/badge?page_id=06-rate-limit-algorithm&left_color=blue&right_color=red)
+![访问统计](https://visitor-badge.glitch.me/badge?page_id=senlypan.qa.06-rate-limit-algorithm&left_color=blue&right_color=red)
 
 > 作者: 潘深练
 >

@@ -1,6 +1,6 @@
 # 数据密集型应用
 
-![访问统计](https://visitor-badge.glitch.me/badge?page_id=06-data-intensive-application&left_color=blue&right_color=red)
+![访问统计](https://visitor-badge.glitch.me/badge?page_id=senlypan.qa.06-data-intensive-application&left_color=blue&right_color=red)
 
 > 作者: 潘深练
 >
