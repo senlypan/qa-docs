@@ -250,6 +250,7 @@
 
 ## 参考
 
-- [wiki - Information security](https://en.wikipedia.org/wiki/Information_security)
+- [wikipedia - Information security](https://en.wikipedia.org/wiki/Information_security)
 - [imperva - Information Security: The Ultimate Guide](https://www.imperva.com/learn/data-security/information-security-infosec/)
 - [凤凰架构 - 构建可靠的大型分布式系统](http://icyfenix.cn/)
+- [wikipedia - Cryptography](https://en.wikipedia.org/wiki/Cryptography)
