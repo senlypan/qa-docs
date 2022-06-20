@@ -8,11 +8,13 @@
 
 ## 并发编程基础 
 
-[Java并发编程聚合文档](http://concurrent-programming.panshenlian.com/#/zh-cn/00-Java-Concurrency-and-Multithreading-Tutorial)
+- [Java并发编程聚合文档](http://concurrent-programming.panshenlian.com/#/zh-cn/00-Java-Concurrency-and-Multithreading-Tutorial)
+
+- [ThreadLocal夺命11连问](https://mp.weixin.qq.com/s/xssF-ckUsXI7tY74zix-GQ)
 
 ## QA
 
-### 应用容器的线程池，不想自己主动 remove 维护，容器会自动回收吗
+### 1、应用容器的线程池，不想自己主动 remove 维护，容器会自动回收吗
 
 - 首先回答：不会。由于：
     - 业务层面把线程变量存储到 Threadlocal 中 （实质是在 ThreadLocalMap），ThreadLocal 只是作为 key ，并且 ThreadLocalMap 中的 key 为 Threadlocal 的弱引用，当一个对象只存在弱引用时，key 会在下一次 GC 的时候被清除掉。
