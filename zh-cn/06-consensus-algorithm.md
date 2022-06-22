@@ -495,3 +495,7 @@ Lease 机制，翻译过来即是 **租约机制**，是一种在分布式系统
 7、[Paxos intro in《凤凰架构》](http://icyfenix.cn/distribution/consensus/paxos.html)
 
 8、[Implementing Replicated Logs with Paxos](https://ongardie.net/static/raft/userstudy/paxos.pdf)
+
+9、[In Search of an Understandable Consensus Algorithm](https://raft.github.io/raft.pdf)
+
+10、[Students' Guide to Raft](https://thesquareplanet.com/blog/students-guide-to-raft/)
