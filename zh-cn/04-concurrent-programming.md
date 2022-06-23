@@ -20,8 +20,8 @@
     - 业务层面把线程变量存储到 Threadlocal 中 （实质是在 ThreadLocalMap），ThreadLocal 只是作为 key ，并且 ThreadLocalMap 中的 key 为 Threadlocal 的弱引用，当一个对象只存在弱引用时，key 会在下一次 GC 的时候被清除掉。
     - ![](../_media/images/04-concurrent-programming/04-concurrent-programming-001.png)
     - 但是，ThreadLocalMap 对应的 value 是强引用，不会被 gc 清理，这样一来就会导致内存泄露。
-    - 所以需要在代码中主动进行 remove 清除，否则会导致两个不良后果：
-        - A. 由于 value 的存在导致内存泄露 ； 
-        - B. 由于线程的复用导致数据脏读。
+    - 所以需要在代码中主动进行 remove 清除，避免：
+        - A. 由于ThreadLocalMap.Entry的Value没及时remove，导致的内存堆积、甚至泄露；
+        - B. 由于线程池场景下线程复用，导致不同客户端情况出现数据脏读；
     - 参考文章：[《CSDN - ThreadLocal:内存泄漏问题及Java的对应处理办法》](https://blog.csdn.net/cold___play/article/details/105936714)
  
