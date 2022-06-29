@@ -170,6 +170,105 @@
 
 与安全相关的问题，一般不会直接创造价值，解决起来又烦琐复杂，费时费力，因此经常性被开发者有意无意地忽略掉。庆幸的是这些问题基本上也都是与具体系统、具体业务无关的通用性问题，这意味着它们往往会存在着业界通行的、已被验证过是行之有效的解决方案，乃至已经形成行业标准，不需要开发者自己从头去构思如何解决。
 
+### 认证
+
+#### 认证的标准
+
+世纪之交，Java 迎来了 Web 时代的辉煌，互联网的迅速兴起促使 Java 进入了快速发展时期。这时候，基于 HTML 和 JavaScript 的超文本 Web 应用迅速超过了“Java 2 时代”之前的 Java Applets 应用，B/S 系统对最终用户认证的需求使得“安全认证”的重点逐渐从“代码级安全”转为“用户级安全”，即你是否信任正在操作的用户。在 1999 年，随 J2EE 1.2（它是 J2EE 的首个版本，为了与 J2SE 同步，初始版本号直接就是 1.2）发布的 Servlet 2.2 中，添加了一系列用于认证的 API，主要包括下列两部分内容：
+
+- 标准方面，添加了四种内置的、不可扩展的认证方案，即
+    - Basic
+    - Form
+    - Digest
+    - Client-Cert
+
+- 实现方面，添加了与认证和授权相关的一套程序接口，譬如
+    - HttpServletRequest::isUserInRole()
+    - HttpServletRequest::getUserPrincipal()
+    - 等方法
+
+引用 J2EE 1.2 对安全的改进还有另一个原因，它内置的 Basic、Digest、Form 和 Client-Cert 这四种认证方案都很有代表性，刚好分别覆盖了通信信道、协议和内容层面的认证。而这三种层面认证恰好涵盖了主流的三种认证方式，具体含义和应用场景列举如下。
+
+- 通信信道上的认证：你和我建立通信连接之前，要先证明你是谁。在网络传输（Network）场景中的典型是基于 SSL/TLS 传输安全层的认证。
+- 通信协议上的认证：你请求获取我的资源之前，要先证明你是谁。在互联网（Internet）场景中的典型是基于 HTTP 协议的认证。
+- 通信内容上的认证：你使用我提供的服务之前，要先证明你是谁。在万维网（World Wide Web）场景中的典型是基于 Web 内容的认证。
+
+#### 认证的实现
+
+了解过业界标准的认证规范以后，这部分简要介绍一下在 Java 技术体系内通常是如何实现安全认证的。Java 其实也有自己的认证规范，第一个系统性的 Java 认证规范发布于 Java 1.3 时代，是由 Sun 公司提出的同时面向代码级安全和用户级安全的认证授权服务——JAAS（Java Authentication and Authorization Service，Java 认证和授权服务，Java 1.3 处于扩展包中，Java 1.4 时纳入标准包）。尽管 JAAS 已经考虑了最终用户的认证，但代码级安全在规范中仍然占更主要的地位。可能今天用过甚至听过 JAAS 的 Java 程序员都已经不多了，但是这个规范提出了很多在今天仍然活跃于主流 Java 安全框架中的概念，譬如一般把用户存放在“Principal”之中、密码存在“Credentials”之中、登录后从安全上下文“Context”中获取状态等常见的安全概念，都可以追溯到这一时期所定下的 API：
+
+- LoginModule （javax.security.auth.spi.LoginModule）
+- LoginContext （javax.security.auth.login.LoginContext）
+- Subject （javax.security.auth.Subject）
+- Principal （java.security.Principal）
+- Credentials（javax.security.auth.Destroyable、javax.security.auth.Refreshable）
+
+JAAS 开创了这些沿用至今的安全概念，但规范本身实质上并没有得到广泛的应用，笔者认为有两大原因，一方面是由于 JAAS 同时面向代码级和用户级的安全机制，使得它过度复杂化，难以推广。在这个问题上 Java 社区一直有做持续的增强和补救，譬如 Java EE 6 中的 JASPIC、Java EE 8 中的 EE Security：
+
+- JSR 115：Java Authorization Contract for Containers（JACC）
+- JSR 196：Java Authentication Service Provider Interface for Containers（JASPIC）
+- JSR 375： Java EE Security API（EE Security）
+
+而另一方面，可能是更重要的一个原因，在 21 世纪的第一个十年里，以“With EJB”为口号，以 WebSphere、Jboss 等为代表的 J2EE 容器环境，与以“Without EJB”为口号、以 Spring、Hibernate 等为代表的轻量化开发框架产生了激烈的竞争，结果是后者获得了全面胜利。这个结果使得依赖于容器安全的 JAAS 无法得到大多数人的认可。
+
+在今时今日，实际活跃于 Java 安全领域的是两个私有的（私有的意思是不由 JSR 所规范的，即没有 java/javax.*作为包名的）的安全框架：
+
+- Apache Shiro
+- Spring Security
+
+相较而言，Shiro 更便捷易用，而 Spring Security 的功能则要复杂强大一些。无论是单体架构还是微服务架构大部分都选择了 Spring Security 作为安全框架，这个选择与功能、性能之类的考量没什么关系，就只是因为 Spring Boot、Spring Cloud 全家桶的缘故。这里不打算罗列代码来介绍 Shiro 与 Spring Security 的具体使用，只从目标上看，两个安全框架提供的功能都很类似，大致包括以下四类：
+
+- 认证功能：以 HTTP 协议中定义的各种认证、表单等认证方式确认用户身份，这是本节的主要话题。
+- 安全上下文：用户获得认证之后，要开放一些接口，让应用可以得知该用户的基本资料、用户拥有的权限、角色，等等。
+- 授权功能：判断并控制认证后的用户对什么资源拥有哪些操作许可，这部分内容会放到“授权”介绍。
+- 密码的存储与验证：密码是烫手的山芋，存储、传输还是验证都应谨慎处理，我们会放到“保密”去具体讨论。
+
+### 授权
+
+- 确保授权的过程可靠
+    - OAuth 2
+        - 授权码模式（Authorization Code）
+        - 隐式授权模式（Implicit）
+        - 密码模式（Resource Owner Password Credentials）
+        - 客户端模式（Client Credentials）
+    - SAML 2.0
+
+- 确保授权的结果可控
+    - DAC
+    - MAC
+    - ABAC
+    - RBAC (Role-Based Access Control)
+
+### 凭证
+
+- Cookie-Session
+- JWT（JSON Web Token）
+
+### 保密
+
+- 密码强度
+- 客户端加密
+- 密码存储和验证
+
+### 传输
+
+#### 摘要、加密与签名
+
+- 加密算法
+    - 哈希摘要（不可逆）
+    - 对称加密
+    - 非对称加密
+- 数字证书
+    - CA
+    - RA
+- 安全传输层
+
+### 验证
+
+- 数据有效性校验
+- 业务校验
+- 逻辑校验
+
 **详见凤凰架构关于《架构安全性》的介绍**
 
 [认证](http://icyfenix.cn/architect-perspective/general-architecture/system-security/authentication.html) | [授权](http://icyfenix.cn/architect-perspective/general-architecture/system-security/authorization.html) | [凭证](http://icyfenix.cn/architect-perspective/general-architecture/system-security/credentials.html) | [保密](http://icyfenix.cn/architect-perspective/general-architecture/system-security/confidentiality.html) | [传输](http://icyfenix.cn/architect-perspective/general-architecture/system-security/transport-security.html) | [验证](http://icyfenix.cn/architect-perspective/general-architecture/system-security/verification.html)
