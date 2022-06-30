@@ -304,11 +304,11 @@ JAAS 开创了这些沿用至今的安全概念，但规范本身实质上并没
     - Modern Cipher（现代密码）
         - Symmetric Cipher（对称密码） | Secret cryptography（私钥密码）
             - Block cipher（分组密码）
-                - **Lucifer / DES**
+                - **Lucifer / DES**（1977）
                 - IDEA
                 - **RC5**
-                - **Rijndael / AES**
-                - Blowfish
+                - **Rijndael / AES**（2001）
+                - Blowfish（1993）
                 - **3DES** 
             - Stream Cipher（流密码）
                 - **RC4**
@@ -329,10 +329,10 @@ JAAS 开创了这些沿用至今的安全概念，但规范本身实质上并没
                 - WAKE
         - Asymmetric Cipher (非对称密码) | Public-key cryptography（公钥密码）
             - Integer Factorization Cryptosystems（整数因式分解密码系统）
-                - **RSA**
+                - **RSA**（公钥加密算法，1977）
             - Discrete Log Cryptosystems（离散对数密码系统）
-                - **DSA**（数字签名算法）
-            - Elliptic Curves Cryptosystems（椭圆曲线密码系统）
+                - **DSA**（数字签名算法，只能用于签名，1991）
+            - Elliptic Curves Cryptosystems（椭圆曲线密码系统，1985）
                 - ElGamal（基于Diffie-Hellman 密钥交换）
         - Hash Functions（哈希函数）
             - MD2
@@ -347,9 +347,35 @@ JAAS 开创了这些沿用至今的安全概念，但规范本身实质上并没
             - RIPEMD160
 
 
+## 四、信息安全威胁
+
+可能对信息安全产生威胁的四种方式：
+
+- 窃听
+    - 加密，可以混淆窃听
+        - （1）通过**对称加密**，由于经常要更换秘钥 key ，所以有可能秘钥 key 也被窃听，导致不安全
+        - （2）于是使用**非对称加密**，信息使用公钥 pub 加密发送，然后接收方使用私钥 pri 解密，其中公钥 pub 事先发给发送方保存，接收方私自保存私钥 pri 不公开。所有公钥 pub 被窃听不会产生安全问题，因为没有私钥 pri 可以解密。
+- 篡改
+    - **MAC**，防篡改。消息认证码（Message Authentication Code）有多种实现方式，其中最常见的是 HMAC（Hash MAC），即使用哈希算法来实现 MAC，还有一种是基于分组密码算法的 MAC，不常见。还可以用 HASH（散列）算法，包括 MD5、SHA1/224/256/384/512 等。比如版本控制系统 GIT 就使用 SHA1 来检查文件是否有修改。MAC 的原理，简单来说即是：
+        - （1）传入两个参数 message 和 key，进行一系列计算后得到一个值叫 MAC。
+        - （2）只有 message 和 key 相同的情况下，才能得到相同的 MAC
+    - **数字签名**，防篡改。MAC 虽好，但是遇到和对称密码同样的问题：密钥 key 如何交换。其中一个解决方式就是数字签名，这个“签名”你基本可以想象成现实生活中的手写签名，具有类似的作用。原理上和非对称加密有点像，但有个很大的区别，发送方是用私钥（Pri）进行签名，而接收方用公钥（Pub）进行验签，这跟加密情况正好相反。
+- 否认
+    - 数字签名，抗否认（抵赖）。跟篡改一样的道理，别人不能篡改了，那证明信息就不是别人的信息，你发出去的信息就不能抵赖了（当然允许的情况下你可以选择撤回）
+- 欺骗
+    - 欺骗或伪装，属于中间人攻击。中间人可以通过窃听公钥 pub 之后，伪装公钥 pub' 和 pri' ，于是在发送方和接收方中间既可以收也可以发。
+    - CA（数字证书），针对中间人攻击，我们无法确认其身份，所以需要寻求解决方案来确认身份，建立可信通讯，于是出现了 CA 证书。
+        - 常见的 CA 有著名的 VeriSign、Thawte、GeoTrust，全球 CA 认证服务市场的三巨头。
+        - 三种 CA 隐患
+            - （1）冒领证书
+            - （2）窃取 CA 的私钥
+            - （3）伪装 CA
+
+
 ## 参考
 
 - [wikipedia - Information security](https://en.wikipedia.org/wiki/Information_security)
 - [imperva - Information Security: The Ultimate Guide](https://www.imperva.com/learn/data-security/information-security-infosec/)
 - [凤凰架构 - 构建可靠的大型分布式系统](http://icyfenix.cn/)
 - [wikipedia - Cryptography](https://en.wikipedia.org/wiki/Cryptography)
+- [关于窃听、篡改、否认、欺骗](https://developer.aliyun.com/article/630633)
