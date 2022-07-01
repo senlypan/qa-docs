@@ -170,7 +170,7 @@
 
 与安全相关的问题，一般不会直接创造价值，解决起来又烦琐复杂，费时费力，因此经常性被开发者有意无意地忽略掉。庆幸的是这些问题基本上也都是与具体系统、具体业务无关的通用性问题，这意味着它们往往会存在着业界通行的、已被验证过是行之有效的解决方案，乃至已经形成行业标准，不需要开发者自己从头去构思如何解决。
 
-### 认证
+### 1、认证
 
 #### 认证的标准
 
@@ -178,9 +178,14 @@
 
 - 标准方面，添加了四种内置的、不可扩展的认证方案，即
     - Basic
+        - HTTP Basic Authentication 
     - Form
+        - Form Based Authentication 
     - Digest
-    - Client-Cert
+        - HTTP Digest Authentication 
+    - Client-Cert 
+        - HTTPS Client Authentication
+    - [参考说明：J2EE 1.4 Tutorial - Understanding Login Authentication](http://lia.deis.unibo.it/Courses/TecnologieWeb0708/materiale/laboratorio/guide/j2ee14tutorial7/Security5.html)
 
 - 实现方面，添加了与认证和授权相关的一套程序接口，譬如
     - HttpServletRequest::isUserInRole()
@@ -223,7 +228,7 @@ JAAS 开创了这些沿用至今的安全概念，但规范本身实质上并没
 - 授权功能：判断并控制认证后的用户对什么资源拥有哪些操作许可，这部分内容会放到“授权”介绍。
 - 密码的存储与验证：密码是烫手的山芋，存储、传输还是验证都应谨慎处理，我们会放到“保密”去具体讨论。
 
-### 授权
+### 2、授权
 
 - 确保授权的过程可靠
     - OAuth 2
@@ -239,18 +244,18 @@ JAAS 开创了这些沿用至今的安全概念，但规范本身实质上并没
     - ABAC
     - RBAC (Role-Based Access Control)
 
-### 凭证
+### 3、凭证
 
 - Cookie-Session
 - JWT（JSON Web Token）
 
-### 保密
+### 4、保密
 
 - 密码强度
 - 客户端加密
 - 密码存储和验证
 
-### 传输
+### 5、传输
 
 #### 摘要、加密与签名
 
@@ -263,7 +268,7 @@ JAAS 开创了这些沿用至今的安全概念，但规范本身实质上并没
     - RA
 - 安全传输层
 
-### 验证
+### 6、验证
 
 - 数据有效性校验
 - 业务校验
@@ -351,18 +356,25 @@ JAAS 开创了这些沿用至今的安全概念，但规范本身实质上并没
 
 可能对信息安全产生威胁的四种方式：
 
-### 窃听
+### 1、窃听
+
 - 加密，可以混淆窃听
     - （1）通过**对称加密**，由于经常要更换秘钥 key ，所以有可能秘钥 key 也被窃听，导致不安全
     - （2）于是使用**非对称加密**，信息使用公钥 pub 加密发送，然后接收方使用私钥 pri 解密，其中公钥 pub 事先发给发送方保存，接收方私自保存私钥 pri 不公开。所有公钥 pub 被窃听不会产生安全问题，因为没有私钥 pri 可以解密。
-### 篡改
+
+### 2、篡改
+
 - **MAC**，防篡改。消息认证码（Message Authentication Code）有多种实现方式，其中最常见的是 HMAC（Hash MAC），即使用哈希算法来实现 MAC，还有一种是基于分组密码算法的 MAC，不常见。还可以用 HASH（散列）算法，包括 MD5、SHA1/224/256/384/512 等。比如版本控制系统 GIT 就使用 SHA1 来检查文件是否有修改。MAC 的原理，简单来说即是：
     - （1）传入两个参数 message 和 key，进行一系列计算后得到一个值叫 MAC。
     - （2）只有 message 和 key 相同的情况下，才能得到相同的 MAC
 - **数字签名**，防篡改。MAC 虽好，但是遇到和对称密码同样的问题：密钥 key 如何交换。其中一个解决方式就是数字签名，这个“签名”你基本可以想象成现实生活中的手写签名，具有类似的作用。原理上和非对称加密有点像，但有个很大的区别，发送方是用私钥（Pri）进行签名，而接收方用公钥（Pub）进行验签，这跟加密情况正好相反。
-### 否认
+
+### 3、否认
+
 - 数字签名，抗否认（抵赖）。跟篡改一样的道理，别人不能篡改了，那证明信息就不是别人的信息，你发出去的信息就不能抵赖了（当然允许的情况下你可以选择撤回）
-### 欺骗
+
+### 4、欺骗
+
 - 欺骗或伪装，属于中间人攻击。中间人可以通过窃听公钥 pub 之后，伪装公钥 pub' 和 pri' ，于是在发送方和接收方中间既可以收也可以发。
 - CA（数字证书），针对中间人攻击，我们无法确认其身份，所以需要寻求解决方案来确认身份，建立可信通讯，于是出现了 CA 证书。
     - 常见的 CA 有著名的 VeriSign、Thawte、GeoTrust，全球 CA 认证服务市场的三巨头。
@@ -372,6 +384,8 @@ JAAS 开创了这些沿用至今的安全概念，但规范本身实质上并没
         - （3）伪装 CA
 
 
+> 无论是为了防止窃听引入对称加密 key ，还是为了防止篡改做了消息认证码（MAC，本质也是对称加密），其中都涉及到一个问题，那就是秘钥 key 是对称秘钥，在后续秘钥交换（为了安全性一段时间会更换秘钥）的时候，会存在被窃取的可能性，所以就需要加强防窃听和防篡改机制，例如针对防止窃听时使用非对称加密（pub + pri），例如针对防止篡改时使用数字签名（本质就是换成非对称加密），这样一来就相对更加安全。
+
 ## 文献参考
 
 - [wikipedia - Information security](https://en.wikipedia.org/wiki/Information_security)
@@ -379,4 +393,5 @@ JAAS 开创了这些沿用至今的安全概念，但规范本身实质上并没
 - [凤凰架构 - 构建可靠的大型分布式系统](http://icyfenix.cn/)
 - [wikipedia - Cryptography](https://en.wikipedia.org/wiki/Cryptography)
 - [J2EE 1.4 Tutorial - Understanding Login Authentication](http://lia.deis.unibo.it/Courses/TecnologieWeb0708/materiale/laboratorio/guide/j2ee14tutorial7/Security5.html)
+- [SCWCD 1.4 Study Guide - Compare and contrast the authentication types (BASIC, DIGEST, FORM, and CLIENT-CERT)](http://java.boot.by/wcd-guide/ch05s03.html)
 - [Aliyun - 关于窃听、篡改、否认、欺骗](https://developer.aliyun.com/article/630633)
