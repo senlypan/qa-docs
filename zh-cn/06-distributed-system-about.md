@@ -8,6 +8,7 @@
 
 ## 前置阅读
 
+- [《凤凰架构：构建可靠的大型分布式系统》](https://icyfenix.cn/)
 - [《Distributed consensus revised》](http://www.istrsjournal.org/wp-content/uploads/2018/06/Designing_Distributed_Systems.pdf) 剑桥大学计算机实验室的 Heidi Howard 的博士论文
 - [《分布式共识算法:Paxos的泛化与优化扩展小结》](https://zhuanlan.zhihu.com/p/96189481) Amazon资深工程师
 

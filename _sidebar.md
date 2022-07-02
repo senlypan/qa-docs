@@ -87,6 +87,7 @@
   * [ACID](/zh-cn/00-404.md)
   * [理解MySQL](/zh-cn/08-qa-mysql.md)
   * [理解缓存中间件](/zh-cn/08-cache-all.md)
+  * [理解NoSQL](/zh-cn/08-nosql.md)
   * [redis](/zh-cn/08-redis.md)
   * [Fastdfs](/zh-cn/00-404.md)
   * [MongoDB](/zh-cn/00-404.md)
@@ -97,7 +98,6 @@
   * [分布式会话](/zh-cn/00-404.md)
   * [分布式锁](/zh-cn/08-distributed-locking.md) 
   * [时序数据库](/zh-cn/00-404.md)
-  * [nosql数据结构对比](/zh-cn/00-404.md)
 
 * 九、任务调度
 
