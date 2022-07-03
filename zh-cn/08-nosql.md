@@ -103,25 +103,64 @@
 
 > 数据库的核心是数据结构
 
-- 日志追加
-- Hash索引
-- SSTables
-    - 红黑树
-    - AVL树
-    - 跳表
+#### 1.1 引擎演进
+
+目前主流的数据库存储引擎主要有两大阵营：
+
+- B+Tree
+    - Balance Tree，平衡搜索树的一种
+    - 应用为传统数据库引擎，例如 MySQL 的 InnoDB
 - LSM-Tree
-    - B-Tree
-    - Bitcask
-    - LevelDB
-        - Lucene
-    - RocksDB  
-- 其他索引结构
-    - 索引中存储值
-        - 聚集索引
-    - 多列索引
-        - 级联索引
-    - 全文搜索和模糊索引
-    - 在内存中保存所有内容
+    - Log-Structured MergeTree ，日志结构合并树
+    - 应用为新生代（或说NoSQL）数据库引擎，例如 HBase，Cassandra
+
+一般数据库引擎为了 **查询性能最优**，数据需要按照 **顺序排列**，当然也追求高效的写。
+
+**B+Tree的特点与不足**
+
+B+Tree 不同于红黑树，红黑树是假设所有节点都在内存中，而 B+Tree 是为了磁盘搜索而诞生的，B+Tree 的所有数据都存储在叶子节点中，并且增加了顺序访问指针，每个叶子节点都有指向相邻叶子节点的指针（**带顺序访问指针**，提高区间效率），在每次写入或查询时，需要从根节点搜索到叶子节点，再对叶子节点的对应位置进行操作，同时传统的数据库引擎会将 B+Tree 的每个叶子节点设置为一个磁盘页的大小，巧妙利用了磁盘预读原理，将一个叶子节点的大小设为等于一个页，这样每个叶子节点需要一次 I/O 就可以完全载入，**大大减少磁盘 I/O 读取**。
+
+但是 B+Tree 的查询/插入/删除时间复杂度都是 O(log2^n)，在这种随机读写的场景下，磁盘的寻址定位的时间还是太长了，不能发挥出磁盘的最佳性能。
+
+**LSM-Tree的特点**
+
+磁盘随机 I/O 和顺序 I/O 的性能差距甚大，而 LSM-Tree 的核心思想就是 **将离散的随机写请求都转化成批量的顺序写请求**。相对于 B+Tree 每次插入都是 O(log2^n) 更新到磁盘，LSM-Tree 采取的方案（举例蚂蚁的 OceanBase 存储引擎）是：
+
+- 当用户有数据写入时，会写入内存中的 Memtable。
+- 当写入的 Memtable 的数据量达到阈值时，会将 Memtable 冻结为只读的 Frozen Memtable，同时创建出一个新的 Memtable，用于提供数据写入，系统会将所有的 Frozen Memtable 数据写入磁盘，生成一个内部有序的 SSTable
+- 但是查询时，需要查找几乎所有的 SSTable，查询的时间复杂度与 SSTable 的数量呈正相关性
+- 为了解决 SSTable 数量过多的问题，业界通常采用 Leveled Compaction 的策略：将 SSTable 进行分层管理，当每层的 SSTable 数量超过阈值时，会触发一次 Compaction，Compaction 的实质就是将多个 SSTable 的数据进行归并排序，最后输出到同一个 SSTable，在 Compaction 后 SSTable 还可以控制在一个合理范围，并且可以通过 BloomFilter 等机制进行查询的加速。
+
+#### 1.2 关系梳理
+
+
+- 原地更新
+    - B+Tree
+
+
+- 日志结构 
+    - 日志追加
+    - Hash索引
+    - LSM-Tree
+        - 机制
+            - Memtable（内存表，在内存中维护一个有序的列表）
+                - AVL树
+                - 红黑树
+                - 跳表
+            - SSTable（有序的磁盘文件）
+        - 实现
+            - LevelDB
+                - Lucene
+            - RocksDB
+
+- 待办
+    - 1、B-Tree 和 B+Tree 做一个比较和最终归类
+    - 2、存储与索引再重新梳理
+    - 3、Bitcask 归类
+    - 4、LSM-tree 实现机制中 SSTable 的几种 Compaction 方案添加到上述 LSM-Tree 特点中
+    - 5、阅读[《mysql底层原理-二叉树、红黑树、BTree、B+Tree》](https://www.youtube.com/watch?v=2iqa7uAm-qE) 并梳理进本文
+
+
 
 ### 2、OLTP vs OLAP 
 
