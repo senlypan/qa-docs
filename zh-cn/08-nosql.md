@@ -135,9 +135,11 @@ B+Tree 不同于红黑树，红黑树是假设所有节点都在内存中，而 
 
 
 - 原地更新
+    - BTree
+    - B-Tree
     - B+Tree
-
-
+    - B*Tree
+    - 详见[《二、数据结构/3.1、BTree,B-Tree,B+Tree,B*Tree的数据结构》](/zh-cn/03-data-structure?id=_31%e3%80%81btreeb-treebtreebtree%e7%9a%84%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84)
 - 日志结构 
     - 日志追加
     - Hash索引
@@ -156,7 +158,6 @@ B+Tree 不同于红黑树，红黑树是假设所有节点都在内存中，而 
             - RocksDB
 
 - 待办
-    - 1、B-Tree 和 B+Tree 做一个比较和最终归类
     - 2、存储与索引再重新梳理
     - 3、Bitcask 归类
     - 4、LSM-tree 实现机制中 SSTable 的几种 Compaction 方案添加到上述 LSM-Tree 特点中
