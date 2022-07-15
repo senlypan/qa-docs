@@ -13,7 +13,7 @@
 * 三、数据基础
 
   * [数据结构](/zh-cn/03-data-structure.md)
-  * [基础算法](/zh-cn/00-404.md)
+  * [基础算法](/zh-cn/03-algorithms.md)
 
 * 四、编程基础
 
