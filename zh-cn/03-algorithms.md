@@ -15,18 +15,18 @@
 ### 1.1、排序
 
 
-排序算法     | 平均时间复杂度 | 最好情况         | 最坏情况      | 空间复杂度 | 排序方式   | 稳定性 
-----         |  ----        |  ----            |  ----         | ----      | ----       | ---- 
-冒泡排序     | O(n^2)        | O(n)            | O(n^2)        | O(1)      | In-place   | ✔️ 
-选择排序     | O(n^2)        | O(n^2)          | O(n^2)        | O(1)      | In-place   | ❌ 
-插入排序     | O(n^2)        | O(n)            | O(n^2)        | O(1)      | In-place   | ✔️ 
-希尔排序     | O(nlogn)      | O(nlog^2 n)     | O(nlog^2 n)   | O(1)      | In-place   | ❌ 
-归并排序     | O(nlogn)      | O(nlogn)        | O(nlogn)      | O(n)      | Out-place  | ✔️ 
-快速排序     | O(nlogn)      | O(nlogn)        | O(n^2)        | O(logn)   | In-place   | ❌ 
-堆排序       | O(nlogn)      | O(nlogn)        | O(nlogn)      | O(1)      | In-place   | ❌ 
-计数排序     | O(n+k)        | O(n+k)          | O(n+k)        | O(k)      | Out-place  | ✔️ 
-桶排序       | O(n+k)        | O(n+k)          | O(n^2)        | O(n+k)    | Out-place  | ✔️ 
-基数排序     | O(n*k)        | O(n*k)          | O(n*k)        | O(n+k)    | Out-place  | ✔️ 
+排序算法     | 平均时间复杂度 | 最好情况         | 最坏情况      | 空间复杂度 | 排序方式   | 稳定性 | 复杂性
+----         |  ----        |  ----            |  ----         | ----      | ----       | ----  | ---- 
+冒泡排序     | O(n^2)        | O(n)            | O(n^2)        | O(1)      | In-place   | ✔️    | ★
+选择排序     | O(n^2)        | O(n^2)          | O(n^2)        | O(1)      | In-place   | ❌    | ★
+插入排序     | O(n^2)        | O(n)            | O(n^2)        | O(1)      | In-place   | ✔️    | ★
+希尔排序     | O(nlogn)      | O(nlog^2 n)     | O(nlog^2 n)   | O(1)      | In-place   | ❌    | ★★★
+归并排序     | O(nlogn)      | O(nlogn)        | O(nlogn)      | O(n)      | Out-place  | ✔️    | ★★★
+快速排序     | O(nlogn)      | O(nlogn)        | O(n^2)        | O(logn)   | In-place   | ❌    | ★★★
+堆排序       | O(nlogn)      | O(nlogn)        | O(nlogn)      | O(1)      | In-place   | ❌    | ★★★
+计数排序     | O(n+k)        | O(n+k)          | O(n+k)        | O(k)      | Out-place  | ✔️    | ★★★
+桶排序       | O(n+k)        | O(n+k)          | O(n^2)        | O(n+k)    | Out-place  | ✔️    | ★★★
+基数排序     | O(n*k)        | O(n*k)          | O(n*k)        | O(n+k)    | Out-place  | ✔️    | ★★★
 
 
 #### 1.1.1、比较排序
@@ -34,7 +34,7 @@
 - 冒泡排序
 - 选择排序
 - 插入排序
-- 贝壳排序
+- 希尔排序
 - 归并排序
 - 快速排序
 
