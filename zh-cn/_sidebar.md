@@ -114,7 +114,7 @@
   * [flume](/zh-cn/00-404.md)
   * [elasticsearch](/zh-cn/00-404.md)
   * [logstash](/zh-cn/00-404.md)
-  * [kibana](/zh-cn/00-404.md)
+  * [kibana](/zh-cn/10-kibana.md)
   * [日志采集方案](/zh-cn/00-404.md)
   * [数据同步方案](/zh-cn/00-404.md)
   * [日志存储](/zh-cn/00-404.md)
