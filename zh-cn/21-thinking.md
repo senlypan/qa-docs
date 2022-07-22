@@ -11,6 +11,6 @@
 
 - [程序员必备的思维能力：抽象思维](https://blog.csdn.net/significantfrank/article/details/113798446)
 
-- [程序员的底层思维：逻辑思维](https://blog.csdn.net/significantfrank/article/details/119273535)
+- [程序员的底层思维能力：逻辑思维](https://blog.csdn.net/significantfrank/article/details/119273535)
 
 - [程序员必备的思维能力：结构化思维](https://blog.csdn.net/significantfrank/article/details/116525195)
