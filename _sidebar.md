@@ -220,7 +220,13 @@
   * [红包方案](/zh-cn/00-404.md)
   * [弹幕方案](/zh-cn/00-404.md)
 
-* 其它、延伸话题
+* 廿一、研发效能
+ 
+  * [研发效能的思考总结](/zh-cn/21-thinking-and-summary-of-r-d-efficiency.md)
+  * [从业务开发中学习和理解架构设计](/zh-cn/21-learn-and-understand-architecture-design-from-business-development.md)
+  * [思维能力](/zh-cn/21-thinking.md)
+
+* 廿二、延伸话题
 
   * [开发规范](/zh-cn/00-404.md)
   * [系统问题](/zh-cn/00-404.md)
