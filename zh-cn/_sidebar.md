@@ -169,9 +169,7 @@
 
 * 十五、网关路由
 
-  * [动态路由](/zh-cn/00-404.md)
-  * [路由策略](/zh-cn/00-404.md)
-  * [API](/zh-cn/00-404.md)
+  * [关于网关](/zh-cn/15-gateway-about.md)
   * [zuul](/zh-cn/00-404.md)
   * [kong](/zh-cn/00-404.md)
   * [springcloud-gateway](/zh-cn/00-404.md)
