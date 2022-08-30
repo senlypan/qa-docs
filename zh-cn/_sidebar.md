@@ -84,6 +84,7 @@
 
 * 八、数据存储
 
+  * [数据库专题](/zh-cn/08-database-about.md)
   * [ACID](/zh-cn/00-404.md)
   * [理解MySQL](/zh-cn/08-qa-mysql.md)
   * [理解缓存中间件](/zh-cn/08-cache-all.md)
