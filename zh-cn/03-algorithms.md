@@ -12,6 +12,8 @@
 
 👉 数据结构和算法的百科网站：[GeeksforGeeks | Algorithms](https://www.geeksforgeeks.org/fundamentals-of-algorithms)
 
+👉 GitHub 最大的开源算法库：[Hello, algorithms](https://the-algorithms.com/)
+
 ## 二、排序
 
 排序算法，简而言之，就是将杂乱无章的 **数据元素**，通过一定的方法按照 **关键词** 顺序排列（消灭逆序对）的过程。
@@ -31,7 +33,6 @@
 桶排序       | O(n+k)           | O(n+k)          | O(n²)         | O(n·k)    | Out-place  | ✔️    | ★★
 基数排序     | O(n·k)           | O(n·k)          | O(n·k)        | O(n+k)    | Out-place  | ✔️    | ★★
 
-
 - 时间复杂度是O(n+k)
     - n: 数据个数
     - k: 数据范围（跨度）
@@ -43,6 +44,9 @@
         - 排序数值（索引）关联到的其它信息（具体数据），排序后其它信息（具体数据）也会影响到顺序
         - 排序算法影响到程序的健壮性（也就是某方面不稳定）
         - 多次排序，想要延续以前排序的顺序（是否还存在这种可能性）
+
+
+![](../_media/images/03-algorithm/sort-all-com.jpg)
 
 ### 2.2、比较类排序
 
@@ -69,6 +73,8 @@
 - **冒泡排序**
     - 动画演示
         - [冒泡排序--动画演示](https://www.cs.usfca.edu/~galles/visualization/ComparisonSort.html)
+    - 图示
+    ![](../_media/images/03-algorithm/bubble-sort.gif)
     - 概念
         - 交换排序，双层遍历，引入额外临时变量
         - 冒泡排序（Bubble Sort）又称为泡式排序，是一种简单的排序算法。它重复地走访过要排序的数列，一次比较两个元素，如果它们的顺序错误就把它们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。这个算法的名字由来是因为越小的元素会经由交换慢慢“浮”到数列的顶端。
@@ -86,6 +92,8 @@
 - **选择排序**
     - 动画演示
         - [选择排序--动画演示](https://www.cs.usfca.edu/~galles/visualization/ComparisonSort.html)
+    - 图示
+    ![](../_media/images/03-algorithm/selection-sort.gif)
     - 概念
         - 选择排序（Selection sort）是一种简单直观的排序算法。它的工作原理如下。首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置，然后，再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。以此类推，直到所有元素均排序完毕。
     - 冒泡排序算法和选择排序算法的区别
@@ -99,6 +107,8 @@
 - **插入排序**
     - 动画演示
         - [插入排序--动画演示](https://www.cs.usfca.edu/~galles/visualization/ComparisonSort.html)
+    - 图示
+    ![](../_media/images/03-algorithm/insertion-sort.gif)
     - 概念
         - 插入排序（Insertion Sort）是一种简单直观的排序算法。它的工作原理是通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。插入排序在实现上，通常采用in-place排序（即只需用到 O(1) 的额外空间的排序），因而在从后向前扫描过程中，需要反复把已排序元素逐步向后挪位，为最新元素提供插入空间。
     - 优化
@@ -112,6 +122,8 @@
         - [希尔排序--动画演示](https://www.cs.usfca.edu/~galles/visualization/ComparisonSort.html)
     - 视频
         - [算法系列-希尔排序](https://v.youku.com/v_show/id_XMzI3Mzg5NDQ1Mg==.html)
+    - 图示
+    - ![](../_media/images/03-algorithm/shell-sort.jpg)
     - 概念
         - 希尔排序（Shellsort），也称递减增量排序算法，是 **插入排序** 的一种更高效的改进版本，希尔排序是 **不稳定** 的排序算法。
     - **特点**
@@ -134,6 +146,8 @@
 - **归并排序**
     - 动画演示
         - [归并排序--动画演示](https://www.cs.usfca.edu/~galles/visualization/ComparisonSort.html)
+    - 图示
+    ![](../_media/images/03-algorithm/merge-sort.gif)
     - 视频
         - [算法系列-归并排序](https://v.youku.com/v_show/id_XMzI3MzY3NjU0MA==.html)
     - 概念
@@ -204,6 +218,8 @@
 - **堆排序**
     - 动画演示
         - [堆排序--动画演示](https://www.cs.usfca.edu/~galles/visualization/HeapSort.html)
+    - 图示
+    - ![](../_media/images/03-algorithm/heap-sort.gif)
     - 概念
         - **非比较类排序**
         - 堆排序（Heapsort）是指利用堆这种数据结构所设计的一种排序算法。堆是一个近似完全二叉树的结构，并同时满足堆积的性质：即子节点的键值或索引总是小于（或者大于）它的父节点。
@@ -228,6 +244,8 @@
 
 - 动画演示
     - [计数排序--动画演示](https://www.cs.usfca.edu/~galles/visualization/CountingSort.html)
+- 图示
+![](../_media/images/03-algorithm/counting-sort.gif)
 - 概念
     - **非比较类排序**
     - 计数排序（Counting sort）是一种稳定的 **线性时间排序算法**。该算法于1954年由 Harold H. Seward 提出。计数排序使用一个 **额外的数组** C ，其中第 i 个元素是待排序数组 A 中值等于 i 的元素的个数。然后根据数组 C 来将 A 中的元素排到正确的位置。
@@ -273,6 +291,8 @@
 
 - 动画演示
     - [桶排序--动画演示](https://www.cs.usfca.edu/~galles/visualization/BucketSort.html)
+- 图示
+![](../_media/images/03-algorithm/bucket-sort.jpg)
 - 概念
     - **非比较类排序**
     - 桶排序（Bucket sort）或所谓的箱排序，是一个排序演算法，工作的原理是将阵列分到有限数量的桶里。每个桶再个别排序（有可能再使用别的排序演算法或是以递回方式继续使用桶排序进行排序）。桶排序是 **鸽巢排序** 的一种归纳结果。当要被排序的阵列内的数值是均匀分配的时候，桶排序使用线性时间 O(n) 。但桶排序并不是比较排序，他不受到 O(nlogn) 下限的影响。
@@ -343,6 +363,8 @@
 
 - 动画演示
     - [基数排序--动画演示](https://www.cs.usfca.edu/~galles/visualization/RadixSort.html)
+- 图示
+![](../_media/images/03-algorithm/radix-sort.gif)
 - 概念
     - **非比较类排序**
     - 基数排序（Radix sort）是一种非比较型整数排序算法，其原理是将整数按位数切割成不同的数字，然后按每个位数分别比较。由于整数也可以表达字符串（比如名字或日期）和特定格式的浮点数，所以基数排序也不是只能使用于整数。基数排序的发明可以追溯到1887年赫尔曼·何乐礼在列表機（Tabulation Machine）上的贡献。
@@ -369,7 +391,8 @@
 另外，还有一些特别的并行排序算法，例如：
 
 - **双调排序**，可参考详细介绍[《并行算法——双调排序》](https://blog.csdn.net/Asensio_20/article/details/105068977)
-
+    - 图示
+![](../_media/images/03-algorithm/bitonic-sequences.jpg)
 
 
 ### 2.7、排序算法小结

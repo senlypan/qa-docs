@@ -83,6 +83,7 @@
 
 * 八、数据存储
 
+  * [数据库专题](/zh-cn/08-database-about.md)
   * [ACID](/zh-cn/00-404.md)
   * [理解MySQL](/zh-cn/08-qa-mysql.md)
   * [理解缓存中间件](/zh-cn/08-cache-all.md)
@@ -113,7 +114,7 @@
   * [flume](/zh-cn/00-404.md)
   * [elasticsearch](/zh-cn/00-404.md)
   * [logstash](/zh-cn/00-404.md)
-  * [kibana](/zh-cn/00-404.md)
+  * [kibana](/zh-cn/10-kibana.md)
   * [日志采集方案](/zh-cn/00-404.md)
   * [数据同步方案](/zh-cn/00-404.md)
   * [日志存储](/zh-cn/00-404.md)
@@ -168,9 +169,7 @@
 
 * 十五、网关路由
 
-  * [动态路由](/zh-cn/00-404.md)
-  * [路由策略](/zh-cn/00-404.md)
-  * [API](/zh-cn/00-404.md)
+  * [关于网关](/zh-cn/15-gateway-about.md)
   * [zuul](/zh-cn/00-404.md)
   * [kong](/zh-cn/00-404.md)
   * [springcloud-gateway](/zh-cn/00-404.md)
@@ -219,7 +218,13 @@
   * [红包方案](/zh-cn/00-404.md)
   * [弹幕方案](/zh-cn/00-404.md)
 
-* 其它、延伸话题
+* 廿一、研发效能
+ 
+  * [研发效能的思考总结](/zh-cn/21-thinking-and-summary-of-r-d-efficiency.md)
+  * [从业务开发中学习和理解架构设计](/zh-cn/21-learn-and-understand-architecture-design-from-business-development.md)
+  * [思维能力](/zh-cn/21-thinking.md)
+
+* 廿二、延伸话题
 
   * [开发规范](/zh-cn/00-404.md)
   * [系统问题](/zh-cn/00-404.md)

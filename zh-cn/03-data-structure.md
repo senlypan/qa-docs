@@ -6,7 +6,15 @@
 >
 > 创建: 2022-06-07
 
-## 一、数据结构概览
+## 一、数据结构
+
+
+👉 数据结构和算法的可视化网站：[Data Structure Visualizations | 数据结构可视化](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html)
+
+👉 数据结构和算法的百科网站：[GeeksforGeeks | Algorithms](https://www.geeksforgeeks.org/fundamentals-of-algorithms)
+
+👉 GitHub 最大的开源算法库：[Hello, algorithms](https://the-algorithms.com/)
+
 
 ### 1.1、集合性能
 
@@ -27,23 +35,19 @@ ConcurrentHashMap    | ❌ | ✔️ | ✔️ | ❌ | ❌ | ✔️
 CopyOnWriteArraySet  | ❌ | ❌ | ❌ | ❌ | ✔️ | ✔️ 
 
 
-## 二、数据结构 
+## 二、线性表
 
-- 数据结构和算法的可视化网站：[Data Structure Visualizations | 数据结构可视化](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html)
+### 2.1、数组
 
-- 数据结构和算法的百科网站：[GeeksforGeeks | Data Structures](https://www.geeksforgeeks.org/data-structures/)
+### 2.2、链表
 
-### 2.1、线性表
+### 2.3、栈
 
-#### 2.1.1、数组
+### 2.4、队列 
 
-#### 2.1.2、链表
 
-#### 2.1.3、栈
 
-#### 2.1.4、队列 
-
-### 2.2、散列表
+## 三、散列表
 
 - 概念
     - 散列表也叫作哈希表（hash table），这种数据结构提供了键（Key）和值（Value）的映射关系。只要给出一个Key，就可以高效查找到它所匹配的Value，时间复杂度接近于O(1)。 
@@ -110,7 +114,7 @@ CopyOnWriteArraySet  | ❌ | ❌ | ❌ | ❌ | ✔️ | ✔️
             - 如果使用 bit 来存放上述 10000000 个元素，只需要 10000000 个 bit 即可， 10000000 / 8.0 / 1024.0 / 1024.0 = 1.19 M 左右，可以看到 bitmap 可以大大的节约内存。
  
 
-### 2.3、递归 
+## 四、递归 
 
 - 概念
     - 递归，在数学与计算机科学中，是指在函数的定义中使用函数自身的方法。也就是说，递归算法是一种直接或者间接调用自身函数或者方法的算法。
@@ -142,7 +146,7 @@ CopyOnWriteArraySet  | ❌ | ❌ | ❌ | ❌ | ✔️ | ✔️
 
 
 
-### 2.4、二分查找  
+## 五、二分查找  
 
 - 概念
     - 二分查找（Binary Search）算法，也叫折半查找算法
@@ -162,7 +166,7 @@ CopyOnWriteArraySet  | ❌ | ❌ | ❌ | ❌ | ✔️ | ✔️
 - 应用
     - 有序的查找都可以使用二分法。
 
-### 2.5、树
+## 六、树
 
 - 概念
     - 有很多数据的逻辑关系并不是线性关系，在实际场景中，常常存在着一对多，甚至是多对多的情况。
@@ -330,9 +334,9 @@ B+树是B-树的变体，也是一种多路搜索树，其定义基本与B树相
 
 
 
-## 三、应用场景
+## 七、应用场景
 
-### 3.1、CopyOnWriteArrayList
+### 7.1、CopyOnWriteArrayList
 
 首先了解 CopyonwriteArraylist 的一个诞生背景，主要由于 ArrayList 线程不安全（并发场景下的读写冲突问题），而 Vector 虽线程安全锁粒度却又太粗（synchronized），所以在 JDK8 的 JUC 出了个 CopyonwriteArraylist，既能保证线程安全又减小了锁粒度，提高读写性能，唯二不足的就是 copy-on-write 的通病：**占用内存**（写时拷贝副本）、**数据最终一致性**（写时volatile导致读不及时）。
 
@@ -361,9 +365,9 @@ CopyOnWriteArrayList 透露的思想：
 
 
 
-## 四、QA
+## 八、QA
 
-### 4.1、How to synchronize ArrayList in Java ?
+### 8.1、How to synchronize ArrayList in Java ?
 
 - 1、Collections.synchronizedList() - method - returns synchronized list 在查询时需要显式使用同步块，例如 synchronized(list){ todo ...}.
 - 2、copyOnWriteArrayList - class - Thread Safety variant of ArrayList.
