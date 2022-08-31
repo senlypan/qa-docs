@@ -46,7 +46,6 @@
   * [认识分布式系统](/zh-cn/06-distributed-system-about.md)
   * [实用拜占庭容错算法(PBFT)](/zh-cn/06-papper-of-practical-byzantine-fault-tolerance.md)
   * [共识算法](/zh-cn/06-consensus-algorithm.md)
-  * [限流算法](/zh-cn/06-rate-limit-algorithm.md)
   * [分布式服务治理](/zh-cn/06-service-governance.md)
   * [分布式事务](/zh-cn/00-404.md)
   * [架构设计原则](/zh-cn/00-404.md)
@@ -143,7 +142,7 @@
 
 * 十三、熔断降级限流
 
-  * [限流算法](/zh-cn/00-404.md)
+  * [限流算法](/zh-cn/13-rate-limit-algorithm.md)
   * [Sentinel](/zh-cn/00-404.md)
   * [Hystrix](/zh-cn/00-404.md)
 
@@ -154,7 +153,6 @@
   * [pinpoint](/zh-cn/00-404.md)
   * [sleuth](/zh-cn/00-404.md)
   * [T-CAT](/zh-cn/00-404.md)
-  * [prometheus](/zh-cn/00-404.md)
   * [zabbix](/zh-cn/00-404.md)
   * [springboot-actuator](/zh-cn/00-404.md)
   * [服务实例监控](/zh-cn/00-404.md)
@@ -169,7 +167,7 @@
 
 * 十五、网关路由
 
-  * [关于网关](/zh-cn/15-gateway-about.md)
+  * [关于网关选型](http://cloudgaming.panshenlian.com/#/zh-cn/03-deployment-architecture-diagram?id=%e7%bd%91%e5%85%b3%e4%b8%ad%e5%bf%83)
   * [zuul](/zh-cn/00-404.md)
   * [kong](/zh-cn/00-404.md)
   * [springcloud-gateway](/zh-cn/00-404.md)
@@ -180,12 +178,12 @@
   * [spring-security](/zh-cn/00-404.md)
   * [shiro](/zh-cn/00-404.md)
 
-* 十七、自动运维
+* 十七、自动化运维与容器化
 
   * [nexus](/zh-cn/00-404.md)
   * [jenkins](/zh-cn/00-404.md)
   * [docker](/zh-cn/00-404.md)
-  * [kubernetes](/zh-cn/00-404.md)
+  * [kubernetes](/zh-cn/17-kubernetes-about.md)
   * [gitlab](/zh-cn/00-404.md)
   * [sonar](/zh-cn/00-404.md)
   * [YAPI](/zh-cn/00-404.md)
