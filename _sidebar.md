@@ -167,7 +167,7 @@
 
 * 十五、网关路由
 
-  * [关于网关选型](http://cloudgaming.panshenlian.com/#/zh-cn/03-deployment-architecture-diagram?id=%e7%bd%91%e5%85%b3%e4%b8%ad%e5%bf%83)
+  * [关于网关](/zh-cn/15-gateway-about.md)
   * [zuul](/zh-cn/00-404.md)
   * [kong](/zh-cn/00-404.md)
   * [springcloud-gateway](/zh-cn/00-404.md)
@@ -228,7 +228,7 @@
   * [系统问题](/zh-cn/00-404.md)
   * [线上故障管理](/zh-cn/00-404.md)
   * [项目管理](/zh-cn/00-404.md)
-  * [团队管理](/zh-cn/00-404.md)
+  * [团队建设](/zh-cn/22-team-building.md)
   * [个人管理](/zh-cn/00-404.md)
   * [敏捷](/zh-cn/00-404.md)
 
