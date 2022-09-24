@@ -143,6 +143,7 @@
 * 十三、熔断降级限流
 
   * [限流算法](/zh-cn/13-rate-limit-algorithm.md)
+  * [熔断降级设计](/zh-cn/13-rate-limit-design.md)
   * [Sentinel](/zh-cn/00-404.md)
   * [Hystrix](/zh-cn/00-404.md)
 
@@ -224,7 +225,7 @@
 
 * 廿二、延伸话题
 
-  * [开发规范](/zh-cn/00-404.md)
+  * [开发规范](/zh-cn/22-development-standard.md)
   * [系统问题](/zh-cn/00-404.md)
   * [线上故障管理](/zh-cn/00-404.md)
   * [项目管理](/zh-cn/00-404.md)
