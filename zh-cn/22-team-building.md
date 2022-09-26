@@ -9,9 +9,9 @@
 ## 一、管理篇
 
 - [博客园 - 技术团队管理点滴](https://www.cnblogs.com/naturemickey/p/3947885.html)
-    - 相信人 / 价值观很重要 / 以自己为表率 / 共赢思维 / 换位思考
+    - 相信人 x 价值观很重要 x 以自己为表率 x 共赢思维 x 换位思考
 
 ## 二、工作篇
 
 - [个人 - 在 MegaEase 工作是一种怎样的体验](https://blog.localvar.cn/archives/working-at-megaease)
-    - 远程 / 加班 / 考勤 / 软件工程 / 招聘和面试 / 分享
+    - 远程 x 加班 x 考勤 x 软件工程 x 招聘和面试 x 分享
