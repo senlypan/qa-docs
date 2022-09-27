@@ -65,9 +65,8 @@
 
 * 七、分布式架构实践
 
-  * [netty](/zh-cn/00-404.md)
+  * [zookeeper](/zh-cn/07-zookeeper.md)
   * [dubbo](/zh-cn/00-404.md)
-  * [zookeeper](/zh-cn/00-404.md)
   * [eureka](/zh-cn/00-404.md)
   * [nacos](/zh-cn/00-404.md)
   * [consul](/zh-cn/00-404.md)
