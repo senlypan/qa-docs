@@ -12,6 +12,7 @@
 
 * 三、数据基础
 
+  * [运算基础](/zh-cn/03-operation-base.md)
   * [数据结构](/zh-cn/03-data-structure.md)
   * [基础算法](/zh-cn/03-algorithms.md)
 
@@ -120,12 +121,11 @@
 
 * 十一、消息中间件
 
-  * [理解消息中间件](/zh-cn/11-mq.md)
+  * [理解消息中间件与常见问题](/zh-cn/11-mq.md)
   * [rabbitmq](/zh-cn/00-404.md)
   * [rocketmq](/zh-cn/00-404.md)
   * [kafka](/zh-cn/00-404.md)
   * [pulsar](/zh-cn/00-404.md)
-  * [消息中间件问题](/zh-cn/00-404.md)
   * [消息中间件选型](/zh-cn/00-404.md)
 
 * 十二、负载与代理
