@@ -6,9 +6,11 @@
 >
 > 创建: 2022-04-18
 
-## 文档 
+## 推荐文档
 
-[走近JVM](http://jvm.panshenlian.com/#/zh-cn/02-jvm)
+- 👉 [潘深练 - 《Java虚拟机学习手册》](http://jvm.panshenlian.com/)
+
+- 👉 [潘深练 - 《走近JVM》](http://jvm.panshenlian.com/#/zh-cn/02-jvm)
 
 ## QA
 

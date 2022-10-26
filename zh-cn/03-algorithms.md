@@ -444,6 +444,11 @@
 ### 5.4、正则表达式
 ### 5.5、数据压缩
 
+#### HyperLogLog
+
+- [演示 - 《LogLog 与 HyperLogLog》](http://content.research.neustar.biz/blog/hll.html)
+- [论文 - 《HyperLogLog: the analysis of a near-optimal cardinality estimation algorithm》](http://algo.inria.fr/flajolet/Publications/FlFuGaMe07.pdf)
+
 ## 六、算法思维
 ### 6.1、递归
 ### 6.2、贪心算法
