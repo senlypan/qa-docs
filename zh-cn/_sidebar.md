@@ -121,12 +121,11 @@
 
 * 十一、消息中间件
 
-  * [理解消息中间件与常见问题](/zh-cn/11-mq.md)
-  * [rabbitmq](/zh-cn/00-404.md)
-  * [rocketmq](/zh-cn/00-404.md)
-  * [kafka](/zh-cn/00-404.md)
-  * [pulsar](/zh-cn/00-404.md)
-  * [消息中间件选型](/zh-cn/00-404.md)
+  * [消息中间件与常见问题](/zh-cn/11-mq.md)
+  * [rabbitmq](/zh-cn/11-mq?id=_32%e3%80%81rabbitmq)
+  * [kafka](/zh-cn/11-mq?id=_33%e3%80%81kafka)
+  * [rocketmq](/zh-cn/11-mq?id=_34%e3%80%81rocketmq)
+  * [pulsar](/zh-cn/11-mq?id=_35%e3%80%81pulsar)
 
 * 十二、负载与代理
 
