@@ -100,7 +100,8 @@
 
 * 九、任务调度
 
-  * [分布式调度问题](/zh-cn/00-404.md)
+  * [工作流](/zh-cn/09-work-flow-about.md)
+  * [任务调度](/zh-cn/09-task-scheduler-about.md)
   * [quartz](/zh-cn/00-404.md)
   * [elastic-job](/zh-cn/00-404.md)
   * [xxl-job](/zh-cn/00-404.md)
@@ -224,7 +225,7 @@
 * 廿二、延伸话题
 
   * [开发规范](/zh-cn/22-development-standard.md)
-  * [系统问题](/zh-cn/00-404.md)
+  * [效率工具与工作方法](/zh-cn/22-efficiency-tools.md)
   * [线上故障管理](/zh-cn/00-404.md)
   * [项目管理](/zh-cn/00-404.md)
   * [团队建设](/zh-cn/22-team-building.md)

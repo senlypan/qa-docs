@@ -51,3 +51,16 @@
         - cat /proc/meminfo
     - **查看 CPU 的利用率**
         - cat /proc/stat
+- **2.3、更多命令参考**
+    - **CPU/Mem 资源使用状况**
+        - 查看使用 `tsar --mem/cpu/io/net -n 1 -i 1`、`top` 等
+    - **网络状况**
+        - 使用 `lsof`、`netstat` 等
+    - **磁盘使用状况**
+        - 使用 `iostat`、`block_dump`、`inotifywait`、`df/du` 等
+    - **内核日志**
+        - 使用 `/var/log/messages`、`sudo dmesg` 等
+    - **性能工具**
+        - 使用 `strace`、`perf` 等
+    - **IO压测**
+        - 使用 `FIO` 等
