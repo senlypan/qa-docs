@@ -97,6 +97,7 @@
   * [分布式会话](/zh-cn/00-404.md)
   * [分布式锁](/zh-cn/08-distributed-locking.md) 
   * [时序数据库](/zh-cn/00-404.md)
+  * [SQL解析器](/zh-cn/08-sql-parser.md)
 
 * 九、任务调度
 
