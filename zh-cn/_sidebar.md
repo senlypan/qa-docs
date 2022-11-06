@@ -233,6 +233,7 @@
   * [团队建设](/zh-cn/22-team-building.md)
   * [个人管理](/zh-cn/22-personal-building.md)
   * [敏捷](/zh-cn/00-404.md)
+  * [常见问题](/zh-cn/22-qa.md)
 
 ---
 
