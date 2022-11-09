@@ -15,6 +15,8 @@
 
 👉 GitHub 最大的开源算法库：[Hello, algorithms](https://the-algorithms.com/)
 
+👉 演算法筆記: [Algorithm & Data Structure ](https://web.ntnu.edu.tw/~algo/)
+
 
 ### 1.1、集合性能
 

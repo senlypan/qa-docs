@@ -1689,12 +1689,67 @@ unlock tables;
 
 ### 4.1、集群架构设计
 
+`待补充`
+
 ### 4.2、主从模式
 
-### 4.3、双主模式
+![](../_media/images/08-qa-mysql/master-slaver-001.png)
 
-### 4.4、分库分表 
+1、在主服务器将客户端对数据操作的指令传到master的服务端，服务端会根据事务的提交顺序写到二进制日志。
 
+2、在有新的操作后，master会通知slave有新的数据变化。slave通过IO线程将master的二进制日志传到slave的中继日志中。
+
+3、slave会将中继日志中的事件通过SQL线程在备库上执行。从而实现数据更新，直到追赶上master的数据。
+
+4、在master上并行执行的sql语句，在存储到备库的中继日志后，只有一个SQL语句对中继日志中的事务进行串行执行。
+
+5、在master与slave中的数据达到一致后，slave就会进入休眠状态，等待下一次的数据同步，下一次的数据同步有master通知slave。
+
+- 存在的问题:
+    - 主库宕机后，数据可能丢
+    - 从库只有一个SQL Thread，主库写压力大，复制很可能延
+- 解决方法:
+    - 全/半同步复制---解决数据丢失的问题
+    - 并行复制----解决从库复制延迟的问题，基于库
+    - ![](../_media/images/08-qa-mysql/concurrency-001.png)
+
+#### 4.2.1、主从模式-复制模式
+
+- STATEMENT模式（SBR）
+    - 记录每一条SQL修改每一条会修改数据的sql语句会记录到binlog中。
+    - 优点：需要记录每一条 sql语句和每一行的数据变化，减少了binlog日志量，节约IO，提高性能。
+    - 缺点：在某些情况下会导致 master-slave中的数据不一致(如sleep()函数， last_insert_id()，以及user-defined functions(udf)等会出现问题)
+
+- ROW模式（RBR）
+    - 仅记录修改的内容，不记录具体的SQL，不记录每条sql语句的上下文信息，仅需记录哪条数据被修改了，修改成什么样了。
+    - 优点：而且不会出现某些特定情况下的存储过程、或function、或trigger的调用和触发无法被正确复制的问题。
+    - 缺点：是会产生大量的日志，尤其是altertable的时候会让日志暴涨。
+
+- MIXED模式（MBR）
+    - 以上两种模式的混合使用，一般的复制使用STATEMENT模式保存binlog，对于STATEMENT模式无法复制的操作使用ROW模式保存binlog，MySQL会根据执行的SQL语句选择日志保存方式。
+
+#### 4.2.2、主从模式-不同的复制架构
+
+- 主从模式
+    - ![](../_media/images/08-qa-mysql/master-slaver-copy-001.png)
+- 主从多级模式
+    - ![](../_media/images/08-qa-mysql/master-slaver-copy-002.png)
+- 主主模式
+    - ![](../_media/images/08-qa-mysql/master-slaver-copy-003.png)
+    - 互为主从，例如异地，多主，需解决写入冲突
+- 多主模式
+    - ![](../_media/images/08-qa-mysql/master-slaver-copy-004.png) 
+
+### 4.3、分区模式 
+
+- 分库
+    - ![](../_media/images/08-qa-mysql/part-001.png)
+- 分表
+    - ![](../_media/images/08-qa-mysql/part-002.png)
+    - 根据键的范围分区
+    - 根据键的散列分区
+- 分库分表中间件 
+    - ![](../_media/images/08-qa-mysql/part-003.png) 
 
 
 ## 五、分库分表实战及中间件
@@ -1711,6 +1766,24 @@ unlock tables;
 ## 六、运维和第三方工具
 
 ### 6.1、Yearning 
+
+
+#### 6.1.1、简介
+
+Yearning 面向中小型企业的轻量级MySQL SQL语句审核平台.提供查询审计，SQL审核等多种功能.
+
+使用文档：[https://guide.yearning.io/](https://guide.yearning.io/)
+
+项目地址：[https://github.com/cookieY/Yearning](https://github.com/cookieY/Yearning)
+
+#### 6.1.2、对比工具Archery
+
+一站式的 SQL 审核查询平台
+
+使用文档：[https://archerydms.com/](https://archerydms.com/)
+
+项目地址：[https://github.com/hhyo/Archery](https://github.com/hhyo/Archery)
+
 
 ### 6.2、canal
 
@@ -2999,6 +3072,10 @@ select count(id) cont ,address from v_tuser group by address order by address;
 - 3、`redo log` 是循环写的，空间固定会用完；`binlog` 是可以追加写入的。“追加写”是指 `binlog` 文件写到一定大小后会切换到下一个，并不会覆盖以前的日志。
 - 4、`redolog`和`binlog`具有关联行，在恢复数据时，`redo log`用于恢复主机故障时的未更新的物理数据，`binlog`用于备份操作。每个阶段的log操作都是记录在磁盘的，在恢复数据时，`redolog` 状态为 **commit** 则说明`binlog`也成功，直接恢复数据；如果`redolog`是 **prepare**，则需要查询对应的`binlog`事务是否成功，决定是回滚还是执行。
 
+![](../_media/images/08-qa-mysql/redolog-binlog-001.png)
+
+- [《redo、undo、buffer pool、binlog，谁先谁后，有点儿乱？》](https://mp.weixin.qq.com/s/wcJ2KisSaMnfP4nH5NYaQA)
+
 ### 9、什么是两阶段提交？
 
 - 概念理解
@@ -3129,4 +3206,20 @@ Oracle、SQLServer默认隔离级别：**读已提交**
 ### 16、主键为什么尽量使用自增id？
 
 - 在使用 innodb 存储引擎时，数据存储方式是聚簇索引，主键在 B+Tree 上是顺序插入，假如主键 id 不是自增的，那会出现中间插入的情况，这样一来会由于中间页满了之后，导致页分裂，影响插入效率。
+
+### 17、MVCC 能解决幻读吗？
+
+- 背景
+    - 幻读
+        - 简单的说幻读指的的当用户读取某一范围的数据行时，另一个事务又在该范围插入了新行，当用户在读取该范围的数据时会发现有新的幻影行。
+    - 在 MVCC 并发控制中，读操作可以分为两类: 快照读（Snapshot Read）与当前读 （Current Read）。
+        - 快照读：读取的是记录的快照版本（有可能是历史版本），不用加锁。（select）
+        - 当前读：读取的是记录的最新版本，并且当前读返回的记录，都会加锁，保证其他事务不会再并发修改这条记录。（select... for update 或lock in share mode，insert/delete/update）
+    - 目前MVCC只在 Read Commited 和 Repeatable Read 两种隔离级别下工作。
+        - 读已提交 --- 每次读取数据前都生成一个读视图（ReadView）
+        - 可重复读 --- 在第一次读取数据时生成一个读视图（ReadView）
+- 结论
+    - 由于在可重复读隔离级别下，才会产生幻读，所以说的是【可重复读隔离级别】
+        - MVCC解决的是在不加读锁和写锁情况下读操作的幻读问题，原理也就是事务开启时维护一个唯一视图贯穿事务始终，不加锁的读操作始终读的是这个视图，也因此解决了幻读问题。例如你多次 select 都没有加锁（ for update 或 lock is share mode ）
+        - MVCC解决不了，加锁读操作的幻读问题，因为加锁读属于当前读，即读取最新快照，此时在InnoDB中使用临间锁解决。例如你多次 select 都加锁（ for update 或 lock is share mode ）
 

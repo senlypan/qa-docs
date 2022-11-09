@@ -106,7 +106,16 @@ src="https://www.processon.com/embed/624521491e085307893ef6f5"></iframe>
 
 每一个应用都要执行许多相同的业务操作，比如用户管理、商品管理等，那么可以将这些共用的业务提取出来，独立部署。
 
-## 十、增长带来的架构场景演化
+
+## 十、MeshService
+
+- [下一代的微服务架构基础是ServiceMesh？](https://www.sohu.com/a/271138706_355140)
+
+![](../_media/images/06-architecture-target/MeshService.jpg)
+
+![](../_media/images/06-architecture-target/MeshServiceSideCar.jpg)
+
+## 十一、增长带来的架构场景演化
 
 ### 1、增长
 
@@ -121,6 +130,7 @@ src="https://www.processon.com/embed/624521491e085307893ef6f5"></iframe>
 - 更多维度的增长
 
 业务的不断发展带来多维度增长，导致形成更大规模的资源共享，迫使架构演化升级。
+
 
 
 

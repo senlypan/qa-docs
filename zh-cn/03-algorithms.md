@@ -14,6 +14,8 @@
 
 👉 GitHub 最大的开源算法库：[Hello, algorithms](https://the-algorithms.com/)
 
+👉 演算法筆記: [Algorithm & Data Structure ](https://web.ntnu.edu.tw/~algo/)
+
 ## 二、排序
 
 排序算法，简而言之，就是将杂乱无章的 **数据元素**，通过一定的方法按照 **关键词** 顺序排列（消灭逆序对）的过程。

@@ -166,3 +166,7 @@
 ### 3.2、方案
 
 - [得物技术 - 《浅谈系统稳定性与高可用保障的几种思路》](https://mp.weixin.qq.com/s/-4JrbkutRdFB2-RyrBzSeg)
+
+### 3.3、架构设计详解
+
+- [架构设计目的、流程、原则、实践](https://www.processon.com/view/link/6353fa201e08537e2de88bd7?pw=LGSJ#map)

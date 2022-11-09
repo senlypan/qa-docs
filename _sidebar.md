@@ -185,6 +185,7 @@
   * [jenkins](/zh-cn/00-404.md)
   * [docker](/zh-cn/00-404.md)
   * [kubernetes](/zh-cn/17-kubernetes-about.md)
+  * [rancher](/zh-cn/00-404.md)
   * [gitlab](/zh-cn/00-404.md)
   * [sonar](/zh-cn/00-404.md)
   * [YAPI](/zh-cn/00-404.md)
