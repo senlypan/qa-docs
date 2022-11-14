@@ -43,11 +43,12 @@
 
   * [架构目标](/zh-cn/06-architecture-target.md)
   * [架构演化](/zh-cn/06-architecture-evolution.md)
+  * [分布式理论与架构设计原理](/zh-cn/06-distributed-theory-and-architecture-design-principle.md)
   * [数据密集型应用](/zh-cn/06-data-intensive-application.md)
   * [认识分布式系统](/zh-cn/06-distributed-system-about.md)
   * [实用拜占庭容错算法(PBFT)](/zh-cn/06-papper-of-practical-byzantine-fault-tolerance.md)
   * [共识算法](/zh-cn/06-consensus-algorithm.md)
-  * [分布式服务治理](/zh-cn/06-service-governance.md)
+  * [服务限流](/zh-cn/06-service-rate-limit.md)
   * [分布式事务](/zh-cn/00-404.md)
   * [架构设计原则](/zh-cn/00-404.md)
   * [架构设计协议](/zh-cn/00-404.md)
@@ -82,8 +83,8 @@
 
 * 八、数据存储
 
+  * [分布式存储架构](/zh-cn/08-distributed-storage-architecture.md)
   * [数据库专题](/zh-cn/08-database-about.md)
-  * [ACID](/zh-cn/00-404.md)
   * [理解MySQL](/zh-cn/08-qa-mysql.md)
   * [理解缓存中间件](/zh-cn/08-cache-all.md)
   * [理解NoSQL](/zh-cn/08-nosql.md)
