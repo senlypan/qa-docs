@@ -3074,7 +3074,12 @@ select count(id) cont ,address from v_tuser group by address order by address;
 
 ![](../_media/images/08-qa-mysql/redolog-binlog-001.png)
 
+![](../_media/images/08-qa-mysql/qa-mysql-master-slaver-001.jpg)
+
 - [《redo、undo、buffer pool、binlog，谁先谁后，有点儿乱？》](https://mp.weixin.qq.com/s/wcJ2KisSaMnfP4nH5NYaQA)
+
+
+
 
 ### 9、什么是两阶段提交？
 
@@ -3222,4 +3227,10 @@ Oracle、SQLServer默认隔离级别：**读已提交**
     - 由于在可重复读隔离级别下，才会产生幻读，所以说的是【可重复读隔离级别】
         - MVCC解决的是在不加读锁和写锁情况下读操作的幻读问题，原理也就是事务开启时维护一个唯一视图贯穿事务始终，不加锁的读操作始终读的是这个视图，也因此解决了幻读问题。例如你多次 select 都没有加锁（ for update 或 lock is share mode ）
         - MVCC解决不了，加锁读操作的幻读问题，因为加锁读属于当前读，即读取最新快照，此时在InnoDB中使用临间锁解决。例如你多次 select 都加锁（ for update 或 lock is share mode ）
+
+### 18、mysql 如何保证主从一致？
+
+- 先说答案: 当然是靠 `binlog`，binlog 在 MySQL 的各种高可用方案上扮演了重要角色，是所有 MySQL 高可用方案的基础，在这之上演化出了诸如 **多节点、半同步、MySQL group replication** 等相对复杂的方案。
+
+- 详细讲解见 [极客 - 《MySQL 实战 45 讲》/ 24 | MySQL是怎么保证主备一致的？](https://time.geekbang.org/column/article/76446)
 
