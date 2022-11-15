@@ -49,6 +49,7 @@
   * [实用拜占庭容错算法(PBFT)](/zh-cn/06-papper-of-practical-byzantine-fault-tolerance.md)
   * [共识算法](/zh-cn/06-consensus-algorithm.md)
   * [服务限流](/zh-cn/06-service-rate-limit.md)
+  * [服务调用演进](/zh-cn/06-service-call-evolution.md)
   * [分布式事务](/zh-cn/00-404.md)
   * [架构设计原则](/zh-cn/00-404.md)
   * [架构设计协议](/zh-cn/00-404.md)
@@ -57,12 +58,12 @@
   * [分布式技术栈](/zh-cn/00-404.md)
   * [全栈监控](/zh-cn/00-404.md)
   * [服务调度](/zh-cn/00-404.md)
-  * [流量与数据调度](/zh-cn/00-404.md)
   * [编程范式](/zh-cn/00-404.md)
   * [弹力设计](/zh-cn/00-404.md)
   * [性能设计](/zh-cn/00-404.md)
   * [管理设计](/zh-cn/00-404.md)
   * [DDD](/zh-cn/06-ddd.md)
+  * [流量与数据调度](/zh-cn/00-404.md)
   * [推荐阅读](/zh-cn/06-book-list.md)
 
 * 七、分布式架构实践
