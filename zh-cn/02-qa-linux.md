@@ -58,6 +58,7 @@
         - 使用 `lsof`、`netstat` 等
     - **磁盘使用状况**
         - 使用 `iostat`、`block_dump`、`inotifywait`、`df/du` 等
+        - 例如 `df -h` 查看硬盘空间情况
     - **内核日志**
         - 使用 `/var/log/messages`、`sudo dmesg` 等
     - **性能工具**
