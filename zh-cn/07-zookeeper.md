@@ -30,3 +30,8 @@ Zookeeper 从设计模式角度来理解：是一个基于 **观察者模式** �
 ## 二、优势
 
 `待补充`
+
+
+## 三、应用
+
+- [zookeeper实现分布式锁的两种方式](https://cloud.tencent.com/developer/article/2039944)
