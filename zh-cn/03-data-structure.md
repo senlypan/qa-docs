@@ -176,8 +176,14 @@ CopyOnWriteArraySet  | ❌ | ❌ | ❌ | ❌ | ✔️ | ✔️
 - 分类
     - 二叉树
         - 满二叉树
+            - 全部节点都满，根节点 -> 枝节点 -> 叶子节点
         - 完全二叉树
         - 平衡二叉树
+        - 二叉查找树
+            - binary search tree ，成了 **有序** 树，在二叉树基础上增加了条件定义：
+                - 1、如果左子树不为空，则左子树上所有节点的值均小于根节点的值
+                - 2、如果右子树不为空，则右子树上所有节点的值均大于根节点的值
+                - 3、左、右子树也都是二叉查找树
         - 平衡二叉查找树
             - AVL树（很棒棒的平衡策略之一）
                 - 场景
@@ -213,6 +219,12 @@ CopyOnWriteArraySet  | ❌ | ❌ | ❌ | ❌ | ✔️ | ✔️
         - 树状数组
         - 线段树   
 
+> 关于不同类型的二叉树，理论上使用链表（next/prev -> right/left）存储是相对能更好的利用内存，无论是满二叉树，还是缺少节点的稀疏树，自然都可以，但是如果使用数组来存储，除非是满二叉树的情况或者完全二叉树的情况，能够很好的利用内存，否则一颗太稀疏的树，对内存的浪费就太多了，会流出很多空值位置。
+
+**二叉树的遍历**
+
+二叉树，是典型的非线性数据结构，遍历时需要把非线性关联的节点转化成一个线性的序列，以不同的方式来遍历，遍历出的序列顺序也不同。
+
 - 深度优先遍历
     - 概念
         - 所谓深度优先，顾名思义，就是偏向于纵深，“一头扎到底”的访问方式。
@@ -223,6 +235,207 @@ CopyOnWriteArraySet  | ❌ | ❌ | ❌ | ❌ | ✔️ | ✔️
             - 二叉树的中序遍历，输出顺序是左子树、根节点、右子树
         - 后序遍历
             - 二叉树的后序遍历，输出顺序是左子树、右子树、根节点
+    - 代码
+        - 树节点
+        ```java
+        public class TreeNode {
+
+            // 数据
+            int data;
+
+            // 左子节点
+            TreeNode leftChild;
+
+            // 右子节点
+            TreeNode rightChild;
+
+            public TreeNode(int data) {
+                this.data = data;
+            }
+        }
+        ```
+        - 二叉查找树
+        ```java
+        public class BinarySearchTree {
+            private TreeNode root;
+
+            /**
+            * 插入节点
+            * @param data
+            */
+            public void insertNode(int data){
+                root = insert(root,data);
+            }
+
+            /**
+            * 插入树节点
+            * @param node
+            * @param data
+            * @return
+            */
+            private TreeNode insert(TreeNode node, int data) {
+                // 递归结束条件
+                if (null == node){
+                    return new TreeNode(data);
+                }
+                // 数据小于父节点插入到左边
+                if (node.data > data){
+                    node.leftChild = insert( node.leftChild , data);
+                }
+                // 数据大于父节点插入到右边
+                else if (node.data < data){
+                    node.rightChild = insert( node.rightChild , data);
+                }
+                // 数据相等，不新插入，原数据返回
+                else {
+                    node.data = data;
+                }
+                return node;
+            }
+
+            /**
+            * 前序遍历
+            * @param node
+            */
+            public void preOrderTraversal(TreeNode node){
+                // 递归结束条件
+                if (node == null){
+                    return;
+                }
+                // 根 -> 左 -> 右
+                System.out.println(" 前序遍历 \t\t " +node.data);
+                preOrderTraversal(node.leftChild);
+                preOrderTraversal(node.rightChild);
+            }
+
+            /**
+            * 中序遍历
+            *    <p>
+            *        中序遍历二叉排序树可以得到一个有序的序列
+            *    </p>
+            * @param node
+            */
+            public void midOrderTraversal(TreeNode node){
+                // 递归结束条件
+                if (node == null){
+                    return;
+                }
+                // 左 -> 根 -> 右
+                midOrderTraversal(node.leftChild);
+                System.out.println(" 中序遍历 \t\t " +node.data);
+                midOrderTraversal(node.rightChild);
+            }
+
+            /**
+            * 后序遍历
+            * @param node
+            */
+            public void afterTraversal(TreeNode node){
+                if (node == null){
+                    return;
+                }
+                // 左 -> 右 -> 根
+                afterTraversal(node.leftChild);
+                afterTraversal(node.rightChild);
+                System.out.println(" 后序遍历 \t\t " +node.data);
+            }
+
+            /**
+            * 测试入口
+            * @param args
+            */
+            public static void main(String[] args) {
+
+                // 初始化树 1-2-3-4-5-6-7-8-9-10-11-12-13-14-15
+                //               8
+                //       4               12
+                //   2       6       10       14
+                // 1   3   5   7   9   11   13   15
+                BinarySearchTree binarySearchTree = new BinarySearchTree();
+                binarySearchTree.insertNode(8);
+                binarySearchTree.insertNode(4);
+                binarySearchTree.insertNode(12);
+                binarySearchTree.insertNode(2);
+                binarySearchTree.insertNode(6);
+                binarySearchTree.insertNode(10);
+                binarySearchTree.insertNode(14);
+                binarySearchTree.insertNode(1);
+                binarySearchTree.insertNode(3);
+                binarySearchTree.insertNode(5);
+                binarySearchTree.insertNode(7);
+                binarySearchTree.insertNode(9);
+                binarySearchTree.insertNode(11);
+                binarySearchTree.insertNode(13);
+                binarySearchTree.insertNode(15);
+
+                // 标题
+                System.out.println( " ============================================ ");
+                System.out.println( " 深度遍历 \t\t " + "值 ");
+                // 前序遍历
+                System.out.println( " ============================================ ");
+                binarySearchTree.preOrderTraversal(binarySearchTree.root);
+                // 中序遍历
+                System.out.println( " ============================================ ");
+                binarySearchTree.inOrderTraversal(binarySearchTree.root);
+                // 后序遍历
+                System.out.println( " ============================================ ");
+                binarySearchTree.afterTraversal(binarySearchTree.root);
+            }
+        ```
+        - 结果输出
+        ```shell
+        ============================================ 
+        深度遍历 		 值 
+        ============================================ 
+        前序遍历 		 8
+        前序遍历 		 4
+        前序遍历 		 2
+        前序遍历 		 1
+        前序遍历 		 3
+        前序遍历 		 6
+        前序遍历 		 5
+        前序遍历 		 7
+        前序遍历 		 12
+        前序遍历 		 10
+        前序遍历 		 9
+        前序遍历 		 11
+        前序遍历 		 14
+        前序遍历 		 13
+        前序遍历 		 15
+        ============================================ 
+        中序遍历 		 1
+        中序遍历 		 2
+        中序遍历 		 3
+        中序遍历 		 4
+        中序遍历 		 5
+        中序遍历 		 6
+        中序遍历 		 7
+        中序遍历 		 8
+        中序遍历 		 9
+        中序遍历 		 10
+        中序遍历 		 11
+        中序遍历 		 12
+        中序遍历 		 13
+        中序遍历 		 14
+        中序遍历 		 15
+        ============================================ 
+        后序遍历 		 1
+        后序遍历 		 3
+        后序遍历 		 2
+        后序遍历 		 5
+        后序遍历 		 7
+        后序遍历 		 6
+        后序遍历 		 4
+        后序遍历 		 9
+        后序遍历 		 11
+        后序遍历 		 10
+        后序遍历 		 13
+        后序遍历 		 15
+        后序遍历 		 14
+        后序遍历 		 12
+        后序遍历 		 8
+        ============================================
+        ```
 
 - 广度优先遍历
     - 概念
@@ -236,8 +449,10 @@ CopyOnWriteArraySet  | ❌ | ❌ | ❌ | ❌ | ✔️ | ✔️
                 */ 
                 public  void levelOrderTraversal(TreeNode root){
                     Queue<TreeNode> queue = new LinkedList<TreeNode>();
+                    // offer: 加入队列尾部（最后一个元素），超界返回 false
                     queue.offer(root);
                     while(!queue.isEmpty()){
+                        // poll: 队列头部移出一个元素，为空返回 null
                         TreeNode node = queue.poll();
                         System.out.println(node.data);
                         if(node.leftChild != null){
@@ -248,6 +463,27 @@ CopyOnWriteArraySet  | ❌ | ❌ | ❌ | ❌ | ✔️ | ✔️
                         }
                     }    
                 }
+            ```
+            - 结果输出
+            ```shell
+            ============================================ 
+            广度遍历 		 值 
+            ============================================ 
+            层序遍历 		 8
+            层序遍历 		 4
+            层序遍历 		 12
+            层序遍历 		 2
+            层序遍历 		 6
+            层序遍历 		 10
+            层序遍历 		 14
+            层序遍历 		 1
+            层序遍历 		 3
+            层序遍历 		 5
+            层序遍历 		 7
+            层序遍历 		 9
+            层序遍历 		 11
+            层序遍历 		 13
+            层序遍历 		 15
             ```
 
 - 时间复杂度

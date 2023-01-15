@@ -450,6 +450,7 @@
 
 - [演示 - 《LogLog 与 HyperLogLog》](http://content.research.neustar.biz/blog/hll.html)
 - [论文 - 《HyperLogLog: the analysis of a near-optimal cardinality estimation algorithm》](http://algo.inria.fr/flajolet/Publications/FlFuGaMe07.pdf)
+- [原理 - 《Redis Hyperloglog的原理及数学理论的通俗理解》](https://www.cnblogs.com/tera/p/15840118.html)
 
 ## 六、算法思维
 ### 6.1、递归
