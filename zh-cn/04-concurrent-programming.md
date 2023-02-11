@@ -201,6 +201,8 @@ JUC 包下还有其他关于原子操作的类/集合容器：
 
 - 首先回答：不会。由于：
     - 业务层面把线程变量存储到 Threadlocal 中 （实质是在 ThreadLocalMap），ThreadLocal 只是作为 key ，并且 ThreadLocalMap 中的 key 为 Threadlocal 的弱引用，当一个对象只存在弱引用时，key 会在下一次 GC 的时候被清除掉。
+    - 所以如果 ThreadLocal 没有被外部强引用的情况下，在垃圾回收的时候会被清理掉的，这样一来 ThreadLocalMap中使用这个 ThreadLocal 的 key 也会被清理掉。但是，value 是强引用，不会被清理，这样一来就会出现 key 为 null 的 value，即发生内存泄漏。
+    - ThreadLocalMap实现中已经考虑了这种情况，在调用 set()、get()、remove() 方法的时候，会清理掉 key 为 null 的记录。如果说会出现内存泄漏，那只有在出现了 key 为 null 的记录后，没有手动调用 remove() 方法，并且之后也不再调用 get()、set()、remove() 方法的情况下。
     - ![](../_media/images/04-concurrent-programming/04-concurrent-programming-001.png)
     - 但是，ThreadLocalMap 对应的 value 是强引用，不会被 gc 清理，这样一来就会导致内存泄露。
     - 所以需要在代码中主动进行 remove 清除，避免：
