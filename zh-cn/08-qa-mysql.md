@@ -1120,7 +1120,9 @@ filesort有两种排序算法：**双路排序**和**单路排序**。
 
 #### 1）、慢查询定位
 
-- **开启慢查询日志**
+> 系统变量可以通过MySQL的配置文件（my.cnf或my.ini）进行配置，也可以通过SET语句在MySQL客户端中动态修改，可以使用SHOW VARIABLES命令查看当前MySQL服务器的变量值。
+
+- **开启慢查询日志（系统变量方式）**
     - 查看 MySQL 数据库是否开启了慢查询日志和慢查询日志文件的存储位置的命令如下：
     ```mysql
         SHOW VARIABLES LIKE 'slow_query_log%'
@@ -1134,6 +1136,20 @@ filesort有两种排序算法：**双路排序**和**单路排序**。
     ```
         - long_query_time：指定慢查询的阀值，单位秒。如果SQL执行时间超过阀值，就属于慢查询记录到日志文件中。
         - log_queries_not_using_indexes：表示会记录没有使用索引的查询SQL。前提是slow_query_log的值为ON，否则不会奏效。
+
+- **开启慢查询日志（配置方式）**
+    - 1、打开MySQL的配置文件my.cnf（或my.ini，具体取决于你的操作系统）。
+    - 2、找到 [mysqld] 部分
+    - 3、添加以下代码行：
+    ```mysql
+        slow_query_log = 1
+        slow_query_log_file = /var/log/mysql/mysql-slow.log
+        long_query_time = 2
+    ```
+    - 其中，slow_query_log = 1表示启用慢查询日志功能；slow_query_log_file指定慢查询日志文件的位置和名称；long_query_time表示超过多少秒的查询才被认为是慢查询。
+    - 4、保存并关闭配置文件。
+    - 5、重新启动MySQL服务。
+    - 之后，当有查询执行时间超过long_query_time指定的时间时，这些查询就会被记录到指定的慢查询日志文件中。你可以打开日志文件查看记录的慢查询，并进行分析和优化。
 
 - **查看慢查询日志**
     - 文本方式查看
@@ -3234,3 +3250,8 @@ Oracle、SQLServer默认隔离级别：**读已提交**
 
 - 详细讲解见 [极客 - 《MySQL 实战 45 讲》/ 24 | MySQL是怎么保证主备一致的？](https://time.geekbang.org/column/article/76446)
 
+### 19、mysql 慢查询如何优化？
+
+- [慢查询优化 + 开启与查看](../zh-cn/08-qa-mysql?id=_24、查询优化)
+
+- [mysql性能优化](../zh-cn/08-qa-mysql?id=七、mysql性能优化)
