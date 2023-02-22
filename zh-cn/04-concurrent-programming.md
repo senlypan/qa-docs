@@ -209,4 +209,22 @@ JUC 包下还有其他关于原子操作的类/集合容器：
         - A. 由于ThreadLocalMap.Entry的Value没及时remove，导致的内存堆积、甚至泄露；
         - B. 由于线程池场景下线程复用，导致不同客户端情况出现数据脏读；
     - 参考文章：[《CSDN - ThreadLocal:内存泄漏问题及Java的对应处理办法》](https://blog.csdn.net/cold___play/article/details/105936714)
- 
+
+### 3.2、java线程池类型
+
+- FixedThreadPool（有限线程数的线程池）
+- CachedThreadPool （无限线程数的线程池）
+- ScheduledThreadPool （定时线程池）
+- SingleThreadExecutor （单一线程池）
+- SingleThreadScheduledExecutor（单一定时线程池）
+- ForkJoinPool （分治线程池）
+
+### 3.3、开启线程的三种方式？
+
+Java使用Thread类代表线程，所有的线程对象都必须是Thread类或其子类的实例。
+
+Java可以用三种方式来创建线程：
+
+- 继承Thread类创建线程
+- 实现Runnable接口创建线程
+- 使用Callable和Future创建线程
