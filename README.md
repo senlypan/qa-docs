@@ -16,7 +16,7 @@
 
 # 关于我
 
-这里有我的个人网站：[https://www.panshenlian.com](https://www.panshenlian.com) 、微信公众号：潘潘和他的朋友们。
+这里有我的个人网站：[https://www.panshenlian.com](https://www.panshenlian.com) 、微信公众号：潘大晚。
 
 ***
 Powered by docsify
