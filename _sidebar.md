@@ -223,6 +223,7 @@
  
   * [研发效能的思考总结](/zh-cn/21-thinking-and-summary-of-r-d-efficiency.md)
   * [从业务开发中学习和理解架构设计](/zh-cn/21-learn-and-understand-architecture-design-from-business-development.md)
+  * [我做系统架构的一些原则](/zh-cn/21-some-principles-for-design-system-architecture.md)
   * [思维能力](/zh-cn/21-thinking.md)
 
 * 廿二、延伸话题
