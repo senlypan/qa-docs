@@ -5,6 +5,9 @@
 > 作者: 潘深练
 >
 > 创建: 2022-03-31
+>
+> 版权声明：自由转载-非商用-非衍生-保持署名（[创意共享3.0许可证](https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh)）
+
 
 - [官方文档 MySQL 8.0](https://dev.mysql.com/doc/refman/8.0/en/)
 - [官方文档 MySQL 5.7](https://dev.mysql.com/doc/refman/5.7/en/)

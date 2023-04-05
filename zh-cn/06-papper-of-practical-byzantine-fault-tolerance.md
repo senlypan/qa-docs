@@ -5,6 +5,9 @@
 > 译者: 潘深练
 >
 > 创建: 2022-06-19
+>
+> 版权声明：自由转载-非商用-非衍生-保持署名（[创意共享3.0许可证](https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh)）
+
 
 **论文《实用拜占庭容错（Practical Byzantine Fault Tolerance）》** 于 1999 年 2 月发表在第三届操作系统设计与实现研讨会论文集，发表地美国新奥尔良。
 
