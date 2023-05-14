@@ -104,11 +104,7 @@
 * 九、流程编排任务调度
 
   * [工作流之思考与选型](/zh-cn/09-work-flow-about.md)
-  * [任务调度](/zh-cn/09-task-scheduler-about.md)
-  * [quartz](/zh-cn/00-404.md)
-  * [elastic-job](/zh-cn/00-404.md)
-  * [xxl-job](/zh-cn/00-404.md)
-  * [PowerJob](/zh-cn/00-404.md)
+  * [任务调度之思考与选型](/zh-cn/09-task-scheduler-about.md)
 
 * 十、搜索与日志
 
