@@ -16,9 +16,9 @@
 
 # 关于我
 
-这里有我的个人网站：[https://www.panshenlian.com](https://www.panshenlian.com) 、微信公众号：潘大晚。
+这里有我的个人网站：[https://www.panshenlian.com](https://www.panshenlian.com) 、微信公众号：第一次当爸爸吖。
 
 ***
 Powered by docsify
 
-© 2020-2023 panshenlian.com 版权所有  [豫ICP备2020034308号-1](https://beian.miit.gov.cn/)
+© 2020-2024 panshenlian.com 版权所有  [豫ICP备2020034308号-1](https://beian.miit.gov.cn/)
