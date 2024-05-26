@@ -11,6 +11,7 @@
 
 ## 架构
 
+- [《Advanced Architecting on AWS 3.8.4 (CN): AWS Training and Certification》](https://online.vitalsource.com/reader/books/300-ADVARC-38-CN-SG-E/pageid/2)
 - [《分布式系统的设计模式》](http://www.istrsjournal.org/wp-content/uploads/2018/06/Designing_Distributed_Systems.pdf)
 - [《Distributed Systems》](https://book.douban.com/subject/26039302/)
 - [《高性能Spark》](https://book.douban.com/subject/30166057/)
