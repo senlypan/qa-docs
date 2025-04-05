@@ -91,9 +91,11 @@
   * [数据密集型应用](/zh-cn/09-data-intensive-application.md)
   * [关系型数据库-MySQL](/zh-cn/09-qa-mysql.md)
   * [非关系型数据库-NoSQL](/zh-cn/08-nosql.md)
+  * [分布式数据库](/zh-cn/00-404.md)
   * [时序数据库](/zh-cn/00-404.md)
   * [图数据库](/zh-cn/00-404.md)
   * [存储引擎](/zh-cn/00-404.md)
+  * [数据库中间件](/zh-cn/00-404.md)
   * [缓存中间件](/zh-cn/09-cache-all.md)
   * [分布式缓存-redis](/zh-cn/09-redis.md)
   * [SQL解析器](/zh-cn/09-sql-parser.md)
@@ -101,7 +103,8 @@
  
 * 十、大数据体系
 
-  * [大数据架构](/zh-cn/00-404.md)
+  * [大数据架构](/zh-cn/10-big-data-arch.md)
+  * [数据同步](/zh-cn/00-404.md)
 
 * 十一、消息中间件
 
@@ -177,6 +180,7 @@
 
 * 二十、延伸话题
 
+  * [Devops专题](/zh-cn/20-devops.md)
   * [团队建设](/zh-cn/20-team-building.md)
   * [个人管理](/zh-cn/20-personal-building.md)
   * [常见问题](/zh-cn/20-qa.md)
