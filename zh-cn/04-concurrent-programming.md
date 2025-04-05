@@ -11,9 +11,9 @@
 
 ## 一、并发编程高能推荐
 
-- 👉 [知乎 - 《当我们在谈论并发的时候，我们在谈论什么》](https://www.zhihu.com/column/concurrent)
-
 - 👉 [潘深练 - 《Java并发编程聚合文档》](http://concurrent-programming.panshenlian.com/#/zh-cn/00-Java-Concurrency-and-Multithreading-Tutorial)
+
+- 👉 [知乎 - 《当我们在谈论并发的时候，我们在谈论什么》](https://www.zhihu.com/column/concurrent)
 
 - 👉 [微信公众号 - 《ThreadLocal夺命11连问》](https://mp.weixin.qq.com/s/xssF-ckUsXI7tY74zix-GQ)
 

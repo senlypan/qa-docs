@@ -11,8 +11,7 @@
 
 ## 文档 
 
-[一文读懂Spring本质](http://spring.panshenlian.com/#/zh-cn/02-spring-core)
- 
+- 👉 [潘深练 - 《一文读懂Spring本质》](http://spring.panshenlian.com/#/zh-cn/02-spring-core) 
 
 ## QA
 

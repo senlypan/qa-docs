@@ -11,7 +11,5 @@
 
 ## 推荐文档
 
-- 👉 [潘深练 - 《Java虚拟机学习手册》](http://jvm.panshenlian.com/)
-
 - 👉 [官方 - 《JDK官方文档》](https://docs.oracle.com/en/java/javase/index.html)
  

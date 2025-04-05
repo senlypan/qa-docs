@@ -1,4 +1,4 @@
-# 架构目标
+# 架构设计目标
 
 ![访问统计](https://visitor-badge.glitch.me/badge?page_id=senlypan.qa.06-architecture-target&left_color=blue&right_color=red)
 
