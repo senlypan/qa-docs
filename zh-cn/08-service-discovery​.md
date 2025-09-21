@@ -12,3 +12,4 @@
 ## 服务发现
 
 - [zookeeper - 分布式过程协同技术](/zh-cn/07-zookeeper.md) 
+- [Eurake / Nacos - 服务优雅上下线](/zh-cn/07-graceful-service-deployment-and-shutdown.md) 
